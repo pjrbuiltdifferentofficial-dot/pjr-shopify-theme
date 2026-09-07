@@ -15,7 +15,7 @@
     <div>
       <h3>{{ product.title }}</h3>
       {% if product.metafields.descriptors.subtitle != blank %}
-        <p style="margin:0.35rem 0 0;font-size:0.85rem;color:var(--color-muted);max-width:36ch;">{{ product.metafields.descriptors.subtitle }}</p>
+        <p class="product-card__sub">{{ product.metafields.descriptors.subtitle }}</p>
       {% endif %}
     </div>
     <span class="product-card__price">

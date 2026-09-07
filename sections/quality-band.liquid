@@ -1,8 +1,6 @@
-<section class="quality">
+<section class="quality{% if section.settings.image == blank %} quality--plain{% endif %}">
   {% if section.settings.image != blank %}
     {{ section.settings.image | image_url: width: 2000 | image_tag: loading: 'lazy', alt: '' }}
-  {% else %}
-    <img src="{{ 'texture-cotton.jpg' | asset_url }}" alt="" loading="lazy">
   {% endif %}
   <div class="quality__shade"></div>
   <div class="quality__inner">

@@ -10,14 +10,37 @@
         <a class="btn btn--line" href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}">{{ section.settings.cta }}</a>
       {% endif %}
     </div>
+
+    {% assign featured = section.settings.collection %}
+    {% if featured == blank %}
+      {% assign try_handles = 'the-core,core,mens,men,men-s,legacy' | split: ',' %}
+      {% for h in try_handles %}
+        {% if collections[h].products_count > 0 %}
+          {% assign featured = collections[h] %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
     <div class="product-grid product-grid--4">
-      {% if section.settings.collection != blank %}
-        {% for product in section.settings.collection.products limit: section.settings.limit %}
+      {% assign shown = 0 %}
+      {% assign limit = section.settings.limit %}
+      {% if featured != blank %}
+        {% for product in featured.products %}
+          {% if shown >= limit %}{% break %}{% endif %}
           {% render 'product-card', product: product %}
+          {% assign shown = shown | plus: 1 %}
         {% endfor %}
       {% else %}
-        {% for product in collections.all.products limit: section.settings.limit %}
-          {% render 'product-card', product: product %}
+        {% for product in collections.all.products %}
+          {% if shown >= limit %}{% break %}{% endif %}
+          {% assign t = product.title | downcase %}
+          {% assign ty = product.type | downcase %}
+          {% if t contains 'bikini' or t contains 'rash' or t contains 'swim' or ty contains 'swim' %}
+          {% else %}
+            {% render 'product-card', product: product %}
+            {% assign shown = shown | plus: 1 %}
+          {% endif %}
         {% endfor %}
       {% endif %}
     </div>
