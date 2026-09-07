@@ -15,7 +15,6 @@
     },
     "related": {
       "type": "related-products",
-      "disabled": true,
       "settings": {
         "heading": ""
       }
