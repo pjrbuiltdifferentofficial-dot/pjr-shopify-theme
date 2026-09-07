@@ -1,0 +1,106 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "kicker": "FORGED IN THE KITCHEN",
+        "heading": "HARD WORK\nREAL AMBITION\nNO DAYS OFF",
+        "btn_label": "The Core",
+        "btn2_label": "The story"
+      }
+    },
+    "marquee": {
+      "type": "marquee",
+      "settings": {
+        "text": "FORGED IN THE KITCHEN | TWENTY YEARS | NO INVESTORS | NO SHORTCUTS | FOR THE SON | WE DO IT OUR WAY | HARD WORK | NO DAYS OFF"
+      }
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {
+        "kicker": "Core",
+        "heading": "The capsule",
+        "sub": "Not a weekly drop. Pieces built to stay.",
+        "limit": 4,
+        "cta": "Full shop"
+      }
+    },
+    "manifesto": {
+      "type": "manifesto",
+      "settings": {
+        "heading": "Quality. Not merch."
+      },
+      "blocks": {
+        "c1": {
+          "type": "column",
+          "settings": {
+            "title": "240–480 gsm",
+            "text": "Heavy jersey and loopback fleece that still holds the shoulder after a twelve-hour service."
+          }
+        },
+        "c2": {
+          "type": "column",
+          "settings": {
+            "title": "Garment dye",
+            "text": "Dyed after the sew. Colour lives in the fibre, not on it. Every piece carries its own shade."
+          }
+        },
+        "c3": {
+          "type": "column",
+          "settings": {
+            "title": "Cut for the shift",
+            "text": "Dropped shoulder, taped collar, a hem that stays put when you bend over the pass."
+          }
+        }
+      },
+      "block_order": ["c1", "c2", "c3"]
+    },
+    "father": {
+      "type": "split-story",
+      "settings": {
+        "fallback": "lookbook-fjord.jpg",
+        "kicker": "Legacy",
+        "heading": "Father & Son — A Bond That Never Breaks",
+        "text": "This brand did not start as a business plan. It started as a promise. Twenty years in the kitchen — twelve of them in Norway — so a son could watch what it looks like to build something with your own hands. No shortcuts. No investors.",
+        "cta": "Shop Legacy",
+        "ghost": false
+      }
+    },
+    "story": {
+      "type": "split-story",
+      "settings": {
+        "fallback": "story-hands.jpg",
+        "flip": true,
+        "kicker": "Two decades",
+        "heading": "On the pass, there is no room to lie.",
+        "text": "The plate either walks or it dies. PJR Built Different is cut from the same tension: cloth, cut, stitch — it holds, or it is out. We do it our way.",
+        "cta": "Read the story",
+        "ghost": true
+      }
+    },
+    "quality": {
+      "type": "quality-band",
+      "settings": {
+        "kicker": "Cloth",
+        "heading": "Weight you can feel in the hand.",
+        "text": "Ring-spun cotton. Pre-shrunk. Twin-needle. None of this is marketing — it is the spec a tee dies without by the third wash."
+      }
+    },
+    "look": {
+      "type": "lookbook-grid",
+      "settings": {
+        "kicker": "Campaign",
+        "heading": "Built between the shifts.",
+        "cta": "Lookbook"
+      },
+      "blocks": {
+        "s1": { "type": "shot", "settings": { "fallback": "lookbook-cliff.jpg" } },
+        "s2": { "type": "shot", "settings": { "fallback": "lookbook-rain.jpg" } },
+        "s3": { "type": "shot", "settings": { "fallback": "hero-kitchen.jpg" } },
+        "s4": { "type": "shot", "settings": { "fallback": "lookbook-fjord.jpg" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"]
+    }
+  },
+  "order": ["hero", "marquee", "featured", "manifesto", "father", "story", "quality", "look"]
+}

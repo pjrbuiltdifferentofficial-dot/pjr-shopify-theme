@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "main": {
+      "type": "lookbook-page",
+      "settings": {
+        "kicker": "Campaign",
+        "heading": "Built between the shifts.",
+        "intro": "Kitchen, fjord, wet asphalt. Same clothes."
+      },
+      "blocks": {
+        "s1": { "type": "shot", "settings": { "fallback": "hero-kitchen.jpg", "caption": "After service" } },
+        "s2": { "type": "shot", "settings": { "fallback": "lookbook-fjord.jpg", "caption": "Father & Son, Norway" } },
+        "s3": { "type": "shot", "settings": { "fallback": "lookbook-cliff.jpg", "caption": "Fjord" } },
+        "s4": { "type": "shot", "settings": { "fallback": "lookbook-rain.jpg", "caption": "After rain" } },
+        "s5": { "type": "shot", "settings": { "fallback": "story-hands.jpg", "caption": "The pass" } },
+        "s6": { "type": "shot", "settings": { "fallback": "story-kitchen.jpg", "caption": "2 a.m. kitchen" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4", "s5", "s6"]
+    }
+  },
+  "order": ["main"]
+}
