@@ -1,0 +1,35 @@
+{
+  "general": {
+    "skip": "Skip to content",
+    "menu": "Menu",
+    "close": "Close",
+    "shop": "Shop",
+    "cart": "Bag",
+    "search": "Search"
+  },
+  "cart": {
+    "title": "Bag",
+    "empty": "The bag is empty. The line is waiting.",
+    "empty_cta": "Open the shop",
+    "subtotal": "Subtotal",
+    "checkout": "Checkout",
+    "continue": "Keep shopping",
+    "pieces": "pieces",
+    "added": "In the bag",
+    "need_size": "Select a size"
+  },
+  "product": {
+    "add": "Add to bag",
+    "sold_out": "Sold out",
+    "story": "Story",
+    "details": "Spec",
+    "related": "Worn together",
+    "from": "from"
+  },
+  "collections": {
+    "all": "All"
+  },
+  "newsletter": {
+    "success": "You're on the list."
+  }
+}

@@ -1,0 +1,61 @@
+PJR BUILT DIFFERENT — Shopify 2.0 theme
+=======================================
+
+Online Store 2.0 theme matching the site we built: dark editorial,
+Oswald + Figtree, kitchen hero, capsule, Father & Son, lookbook.
+All default copy is English.
+
+INSTALL
+-------
+1. Shopify Admin → Online Store → Themes
+2. On the current theme: ⋯ → Duplicate (backup)
+3. Add theme → Upload zip file
+4. Preview, then Publish
+
+MENU
+----
+Online Store → Navigation
+- Main menu: Shop (/collections/all), Story (/pages/story), Lookbook (/pages/lookbook)
+- Footer: same links
+
+PAGES
+-----
+Online Store → Pages
+- Story    → theme template: story
+- Lookbook → theme template: lookbook
+
+Paste the brand story into the Story page editor.
+
+COLLECTIONS
+-----------
+In Theme editor (Customize) on the homepage, open “The capsule”
+and pick a collection (Men’s / The Core). The theme shows your
+real Shopify / Printful products — photos and prices come from
+the store, not from the theme.
+
+PRODUCTS
+--------
+Paste the English descriptions into each product’s Description.
+Tag “new” to show a New badge. Size / Color options become the
+variant picker on the product page.
+
+LANGUAGE
+--------
+Theme ships with locales/en.default.json (English) and locales/pl.json
+(optional Polish). Store language is set in Settings → Languages.
+
+HERO / CAMPAIGN IMAGES
+----------------------
+Kitchen, fjord and lookbook shots are already in the theme.
+Swap them in Customize if you want.
+
+CART AND CHECKOUT
+-----------------
+Ajax cart drawer + Shopify Checkout.
+Printful and payments stay as they are.
+
+UNCHANGED
+---------
+Apps (Printful, Translate & Adapt) keep working.
+Shopify Checkout is not part of the theme — you cannot replace
+it with theme files.

@@ -1,0 +1,35 @@
+{
+  "general": {
+    "skip": "Przejdź do treści",
+    "menu": "Menu",
+    "close": "Zamknij",
+    "shop": "Sklep",
+    "cart": "Koszyk",
+    "search": "Szukaj"
+  },
+  "cart": {
+    "title": "Koszyk",
+    "empty": "Koszyk jest pusty. Linia czeka.",
+    "empty_cta": "Otwórz sklep",
+    "subtotal": "Suma",
+    "checkout": "Zamówienie",
+    "continue": "Kontynuuj zakupy",
+    "pieces": "sztuk",
+    "added": "W koszyku",
+    "need_size": "Wybierz rozmiar"
+  },
+  "product": {
+    "add": "Do koszyka",
+    "sold_out": "Wyprzedane",
+    "story": "Opis",
+    "details": "Specyfikacja",
+    "related": "Noszone razem",
+    "from": "od"
+  },
+  "collections": {
+    "all": "Wszystko"
+  },
+  "newsletter": {
+    "success": "Jesteś na liście."
+  }
+}
