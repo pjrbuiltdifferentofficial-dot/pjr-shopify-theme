@@ -1,0 +1,97 @@
+{% assign current = product.selected_or_first_available_variant %}
+<div class="page-width product">
+  <div>
+    <div class="product__stage">
+      {% if product.featured_image %}
+        <img data-stage src="{{ product.featured_image | image_url: width: 1400 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}">
+      {% endif %}
+    </div>
+    {% if product.images.size > 1 %}
+      <div class="thumbs">
+        {% for image in product.images %}
+          <button type="button" data-thumb="{{ image | image_url: width: 1400 }}" class="{% if forloop.first %}is-active{% endif %}">
+            {{ image | image_url: width: 240 | image_tag: alt: image.alt }}
+          </button>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+
+  <div>
+    <p class="product__sku">{{ product.vendor }}{% if product.metafields.descriptors.fabric != blank %} · {{ product.metafields.descriptors.fabric }}{% endif %}</p>
+    <h1>{{ product.title }}</h1>
+    {% if product.metafields.descriptors.subtitle != blank %}
+      <p class="product__tag">{{ product.metafields.descriptors.subtitle }}</p>
+    {% endif %}
+    <p class="product__price" data-product-price>{{ current.price | money }}</p>
+
+    {% assign added_label = 'cart.added' | t %}
+    {% assign need_size = 'cart.need_size' | t %}
+    {% form 'product', product, data-product-form: '', data-added: added_label, data-need-size: need_size %}
+      <select name="id" class="visually-hidden" aria-hidden="true">
+        {% for variant in product.variants %}
+          <option value="{{ variant.id }}" {% if variant == current %}selected{% endif %}>{{ variant.title }}</option>
+        {% endfor %}
+      </select>
+
+      {% for option in product.options_with_values %}
+        <div class="option" data-option>
+          <div class="option__label"><span>{{ option.name }}</span></div>
+          <div class="{% if option.name == 'Color' or option.name == 'Kolor' %}swatches{% else %}sizes{% endif %}">
+            {% for value in option.values %}
+              <button
+                type="button"
+                class="size{% if option.selected_value == value %} is-active{% endif %}"
+                data-value="{{ value | escape }}"
+              >{{ value }}</button>
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+
+      <button
+        type="submit"
+        class="btn btn--full"
+        style="margin-top:2rem;"
+        data-add
+        data-in-stock="{{ 'product.add' | t }} — {{ current.price | money }}"
+        data-sold-out="{{ 'product.sold_out' | t }}"
+        {% unless current.available %}disabled{% endunless %}
+      >
+        {% if current.available %}{{ 'product.add' | t }} — {{ current.price | money }}{% else %}{{ 'product.sold_out' | t }}{% endif %}
+      </button>
+    {% endform %}
+
+    <script type="application/json" data-product-json>
+      {{ product | json }}
+    </script>
+
+    <div class="product-tabs">
+      <div class="product-tabs__nav">
+        <button type="button" class="is-active" data-tab="story">{{ 'product.story' | t }}</button>
+        <button type="button" data-tab="details">{{ 'product.details' | t }}</button>
+      </div>
+      <div class="product-tabs__panel rte" data-tab-panel="story">
+        {{ product.description }}
+      </div>
+      <div class="product-tabs__panel rte" data-tab-panel="details" hidden>
+        {% if product.metafields.descriptors.details != blank %}
+          {{ product.metafields.descriptors.details }}
+        {% else %}
+          <ul>
+            {% for tag in product.tags %}
+              <li>{{ tag }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": []
+}
+{% endschema %}
