@@ -1,0 +1,21 @@
+<div class="page-width section">
+  <p class="kicker">{{ 'general.shop' | t }}</p>
+  <h1 style="margin-top:0.5rem;font-size:var(--text-hero);text-transform:uppercase;">{{ 'general.shop' | t }}</h1>
+  <div class="product-grid product-grid--3" style="margin-top:2.5rem;">
+    {% for collection in collections %}
+      {% unless collection.handle == 'all' %}
+        <a href="{{ collection.url }}" class="product-card">
+          <div class="product-card__media">
+            {% if collection.featured_image %}
+              {{ collection.featured_image | image_url: width: 900 | image_tag: alt: collection.title, loading: 'lazy' }}
+            {% endif %}
+          </div>
+          <h3 class="product-card__meta" style="font-size:1.15rem;letter-spacing:0.08em;text-transform:uppercase;">{{ collection.title }}</h3>
+        </a>
+      {% endunless %}
+    {% endfor %}
+  </div>
+</div>
+{% schema %}
+{ "name": "Collections list", "settings": [] }
+{% endschema %}

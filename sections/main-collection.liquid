@@ -1,0 +1,39 @@
+{% paginate collection.products by 24 %}
+<div class="page-width section">
+  <p class="kicker">{{ 'general.shop' | t }}</p>
+  <h1 style="margin-top:0.5rem;font-size:var(--text-hero);text-transform:uppercase;">{{ collection.title }}</h1>
+  {% if collection.description != blank %}
+    <div class="section__sub rte">{{ collection.description }}</div>
+  {% endif %}
+
+  <div class="filters">
+    <a class="filter-chip{% if collection.handle == 'all' %} is-active{% endif %}" href="{{ routes.all_products_collection_url }}">{{ 'collections.all' | t }}</a>
+    {% for col in collections %}
+      {% unless col.handle == 'all' %}
+        <a class="filter-chip{% if collection.handle == col.handle %} is-active{% endif %}" href="{{ col.url }}">{{ col.title }}</a>
+      {% endunless %}
+    {% endfor %}
+  </div>
+
+  <p class="kicker" style="margin-bottom:1.5rem;">{{ collection.products_count }}</p>
+
+  <div class="product-grid product-grid--3">
+    {% for product in collection.products %}
+      {% render 'product-card', product: product %}
+    {% else %}
+      <p>{{ 'cart.empty' | t }}</p>
+    {% endfor %}
+  </div>
+
+  {% if paginate.pages > 1 %}
+    <div style="margin-top:3rem;">{{ paginate | default_pagination }}</div>
+  {% endif %}
+</div>
+{% endpaginate %}
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": []
+}
+{% endschema %}

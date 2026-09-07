@@ -1,0 +1,26 @@
+<section class="quality">
+  {% if section.settings.image != blank %}
+    {{ section.settings.image | image_url: width: 2000 | image_tag: loading: 'lazy', alt: '' }}
+  {% else %}
+    <img src="{{ 'texture-cotton.jpg' | asset_url }}" alt="" loading="lazy">
+  {% endif %}
+  <div class="quality__shade"></div>
+  <div class="quality__inner">
+    <p class="kicker">{{ section.settings.kicker }}</p>
+    <h2 style="margin-top:0.75rem;font-size:var(--text-title);text-transform:uppercase;">{{ section.settings.heading }}</h2>
+    <p>{{ section.settings.text }}</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Quality band",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Cloth" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Weight you can feel in the hand." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Ring-spun cotton. Pre-shrunk. Twin-needle. None of this is marketing — it is the spec a tee dies without by the third wash." }
+  ],
+  "presets": [{ "name": "Quality band" }]
+}
+{% endschema %}

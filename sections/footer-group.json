@@ -1,0 +1,20 @@
+{
+  "name": "Footer",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "tagline": "Premium streetwear for the grind.",
+        "note": "Built between the shifts. Polish blood, Norwegian winter.",
+        "menu": "footer",
+        "news_title": "The next drop. No spam.",
+        "news_body": "We write when there is a reason. Not a word more.",
+        "placeholder": "Your email",
+        "cta": "Join",
+        "rights": "All rights reserved."
+      }
+    }
+  },
+  "order": ["footer"]
+}

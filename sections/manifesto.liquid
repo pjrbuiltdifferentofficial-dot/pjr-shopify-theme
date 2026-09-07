@@ -1,0 +1,40 @@
+<section class="manifesto section">
+  <div class="page-width manifesto__grid">
+    <h2>{{ section.settings.heading }}</h2>
+    {% for block in section.blocks %}
+      <article {{ block.shopify_attributes }}>
+        <h3>{{ block.settings.title }}</h3>
+        <p>{{ block.settings.text }}</p>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Manifesto",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Quality. Not merch." }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Column",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Manifesto",
+      "blocks": [
+        { "type": "column", "settings": { "title": "240–480 gsm", "text": "Heavy jersey and loopback fleece that still holds the shoulder after a twelve-hour service." } },
+        { "type": "column", "settings": { "title": "Garment dye", "text": "Dyed after the sew. Colour lives in the fibre, not on it. Every piece carries its own shade." } },
+        { "type": "column", "settings": { "title": "Cut for the shift", "text": "Dropped shoulder, taped collar, a hem that stays put when you bend over the pass." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

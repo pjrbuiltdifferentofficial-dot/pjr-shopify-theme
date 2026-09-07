@@ -1,0 +1,31 @@
+<section class="section">
+  <div class="page-width">
+    <h2 style="font-size:var(--text-section);text-transform:uppercase;">{{ section.settings.heading }}</h2>
+    <div class="product-grid product-grid--3" style="margin-top:2rem;">
+      {% assign shown = 0 %}
+      {% for rec in recommendations.products %}
+        {% if shown < 3 %}
+          {% render 'product-card', product: rec %}
+          {% assign shown = shown | plus: 1 %}
+        {% endif %}
+      {% endfor %}
+      {% if shown == 0 %}
+        {% for rec in collections.all.products %}
+          {% if rec.id != product.id and shown < 3 %}
+            {% render 'product-card', product: rec %}
+            {% assign shown = shown | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Related products",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Worn together" }
+  ]
+}
+{% endschema %}
