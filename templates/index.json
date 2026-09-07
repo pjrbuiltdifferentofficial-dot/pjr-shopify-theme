@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -6,9 +15,9 @@
         "kicker": "FORGED IN THE KITCHEN",
         "heading": "HARD WORK\nREAL AMBITION\nNO DAYS OFF",
         "btn_label": "The Core",
-        "btn_link": "/collections/all",
+        "btn_link": "",
         "btn2_label": "The story",
-        "btn2_link": "/pages/story"
+        "btn2_link": ""
       }
     },
     "marquee": {
@@ -23,16 +32,14 @@
         "kicker": "Core",
         "heading": "The capsule",
         "sub": "Not a weekly drop. Pieces built to stay.",
+        "collection": "mens",
         "limit": 4,
         "cta": "Full shop",
-        "cta_link": "/collections/all"
+        "cta_link": ""
       }
     },
     "manifesto": {
       "type": "manifesto",
-      "settings": {
-        "heading": "Quality. Not merch."
-      },
       "blocks": {
         "c1": {
           "type": "column",
@@ -56,28 +63,38 @@
           }
         }
       },
-      "block_order": ["c1", "c2", "c3"]
+      "block_order": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "settings": {
+        "heading": "Quality. Not merch."
+      }
     },
     "father": {
       "type": "split-story",
       "settings": {
+        "fallback": "lookbook-fjord.jpg",
+        "flip": false,
         "kicker": "Legacy",
         "heading": "Father & Son — A Bond That Never Breaks",
         "text": "This brand did not start as a business plan. It started as a promise. Twenty years in the kitchen — twelve of them in Norway — so a son could watch what it looks like to build something with your own hands. No shortcuts. No investors.",
         "cta": "Shop Legacy",
-        "link": "/collections/all",
+        "link": "",
         "ghost": false
       }
     },
     "story": {
       "type": "split-story",
       "settings": {
+        "fallback": "story-hands.jpg",
         "flip": true,
         "kicker": "Two decades",
         "heading": "On the pass, there is no room to lie.",
         "text": "The plate either walks or it dies. PJR Built Different is cut from the same tension: cloth, cut, stitch — it holds, or it is out. We do it our way.",
         "cta": "Read the story",
-        "link": "/pages/story",
+        "link": "",
         "ghost": true
       }
     },
@@ -91,20 +108,62 @@
     },
     "look": {
       "type": "lookbook-grid",
+      "blocks": {
+        "s1": {
+          "type": "shot",
+          "settings": {
+            "fallback": "lookbook-cliff.jpg",
+            "alt": "",
+            "link": ""
+          }
+        },
+        "s2": {
+          "type": "shot",
+          "settings": {
+            "fallback": "lookbook-rain.jpg",
+            "alt": "",
+            "link": ""
+          }
+        },
+        "s3": {
+          "type": "shot",
+          "settings": {
+            "fallback": "hero-kitchen.jpg",
+            "alt": "",
+            "link": ""
+          }
+        },
+        "s4": {
+          "type": "shot",
+          "settings": {
+            "fallback": "lookbook-fjord.jpg",
+            "alt": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
       "settings": {
         "kicker": "Campaign",
         "heading": "Built between the shifts.",
         "cta": "Lookbook",
-        "link": "/pages/lookbook"
-      },
-      "blocks": {
-        "s1": { "type": "shot", "settings": { "alt": "Kitchen" } },
-        "s2": { "type": "shot", "settings": { "alt": "Fjord" } },
-        "s3": { "type": "shot", "settings": { "alt": "Shift" } },
-        "s4": { "type": "shot", "settings": { "alt": "Line" } }
-      },
-      "block_order": ["s1", "s2", "s3", "s4"]
+        "link": ""
+      }
     }
   },
-  "order": ["hero", "marquee", "featured", "manifesto", "father", "story", "quality", "look"]
+  "order": [
+    "hero",
+    "marquee",
+    "featured",
+    "manifesto",
+    "father",
+    "story",
+    "quality",
+    "look"
+  ]
 }
