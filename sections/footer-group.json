@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "Footer",
   "type": "footer",
@@ -6,7 +15,7 @@
       "type": "footer",
       "settings": {
         "tagline": "Premium streetwear for the grind.",
-        "note": "Built between the shifts. Polish blood, Norwegian winter.",
+        "note": "Built between the shifts. Polish blood, Norwegian winter. Contact: pjrbuiltdifferentofficial@gmail.com",
         "menu": "footer",
         "news_title": "The next drop. No spam.",
         "news_body": "We write when there is a reason. Not a word more.",
@@ -16,5 +25,7 @@
       }
     }
   },
-  "order": ["footer"]
+  "order": [
+    "footer"
+  ]
 }
