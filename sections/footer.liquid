@@ -1,0 +1,88 @@
+<footer class="site-footer">
+  <div class="page-width site-footer__grid">
+    <div>
+      {% render 'wordmark' %}
+      <p style="margin-top:1rem;max-width:24rem;">{{ section.settings.tagline }}</p>
+      <p style="margin-top:0.5rem;color:var(--color-subtle);max-width:24rem;">{{ section.settings.note }}</p>
+    </div>
+    <div>
+      <p class="kicker">{{ 'general.shop' | t }}</p>
+      <ul>
+        {% for link in section.settings.menu.links %}
+          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+        {% else %}
+          <li><a href="{{ routes.all_products_collection_url }}">{{ 'general.shop' | t }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div>
+      <p class="kicker">{{ section.settings.news_title }}</p>
+      <p style="margin-top:1rem;">{{ section.settings.news_body }}</p>
+      {% form 'customer', class: 'newsletter' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <input class="field" type="email" name="contact[email]" placeholder="{{ section.settings.placeholder }}" required>
+        <button class="btn" type="submit">{{ section.settings.cta }}</button>
+      {% endform %}
+    </div>
+  </div>
+  <div class="page-width site-footer__legal">
+    © {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ section.settings.rights }}
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "enabled_on": { "groups": ["footer"] },
+  "settings": [
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Premium streetwear for the grind."
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "label": "Note",
+      "default": "Built between the shifts. Polish blood, Norwegian winter."
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Footer menu",
+      "default": "footer"
+    },
+    {
+      "type": "text",
+      "id": "news_title",
+      "label": "Newsletter title",
+      "default": "The next drop. No spam."
+    },
+    {
+      "type": "textarea",
+      "id": "news_body",
+      "label": "Newsletter text",
+      "default": "We write when there is a reason. Not a word more."
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Placeholder",
+      "default": "Your email"
+    },
+    {
+      "type": "text",
+      "id": "cta",
+      "label": "Button",
+      "default": "Join"
+    },
+    {
+      "type": "text",
+      "id": "rights",
+      "label": "Legal",
+      "default": "All rights reserved."
+    }
+  ]
+}
+{% endschema %}

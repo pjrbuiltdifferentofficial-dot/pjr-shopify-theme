@@ -1,0 +1,43 @@
+<article>
+  <header class="hero" style="min-height:70dvh;">
+    {% if section.settings.image != blank %}
+      {{ section.settings.image | image_url: width: 2400 | image_tag: class: 'hero__img', alt: page.title }}
+    {% else %}
+      <img class="hero__img" src="{{ 'story-kitchen.jpg' | asset_url }}" alt="{{ page.title | escape }}">
+    {% endif %}
+    <div class="hero__shade"></div>
+    <div class="page-width hero__content">
+      <p class="kicker">{{ section.settings.kicker }}</p>
+      <h1>{{ section.settings.heading | default: page.title }}</h1>
+    </div>
+  </header>
+  <div class="page-width rte" style="max-width:40rem;padding:4rem 1.5rem;">
+    {{ page.content }}
+  </div>
+  {% if section.settings.show_split %}
+    <section class="split">
+      <div class="split__media">
+        <img src="{{ 'story-hands.jpg' | asset_url }}" alt="" loading="lazy">
+      </div>
+      <div class="split__copy">
+        <p class="kicker">Norway · Poland</p>
+        <h2>{{ section.settings.split_heading }}</h2>
+        <p>{{ section.settings.split_text }}</p>
+      </div>
+    </section>
+  {% endif %}
+</article>
+
+{% schema %}
+{
+  "name": "Story page",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Hero" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Two decades" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Twenty years on the line." },
+    { "type": "checkbox", "id": "show_split", "label": "Show Norway split", "default": true },
+    { "type": "text", "id": "split_heading", "label": "Split heading", "default": "Polish blood. Norwegian winter." },
+    { "type": "textarea", "id": "split_text", "label": "Split text", "default": "A fjord does not forgive a thin hoodie. The pass does not forgive a lie in the cloth. We do it our way." }
+  ]
+}
+{% endschema %}

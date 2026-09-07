@@ -1,0 +1,54 @@
+<header class="site-header">
+  <div class="page-width site-header__inner">
+    <button type="button" class="menu-toggle" data-open-menu aria-label="{{ 'general.menu' | t }}">
+      {% render 'icon-menu' %}
+    </button>
+    <nav class="site-header__nav">
+      {% for link in section.settings.menu.links %}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {% else %}
+        <a href="{{ routes.all_products_collection_url }}">{{ 'general.shop' | t }}</a>
+      {% endfor %}
+    </nav>
+    {% render 'wordmark' %}
+    <div class="site-header__actions">
+      <a href="{{ routes.cart_url }}" class="site-header__icon" data-open-cart aria-label="{{ 'general.cart' | t }}">
+        {% render 'icon-bag' %}
+        <span class="cart-count" data-cart-count {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="drawer-backdrop" data-menu-backdrop></div>
+<aside class="nav-drawer">
+  <div style="display:flex;justify-content:space-between;align-items:center;">
+    {% render 'wordmark', compact: true %}
+    <button type="button" class="site-header__icon" data-close-menu aria-label="{{ 'general.close' | t }}">
+      {% render 'icon-close' %}
+    </button>
+  </div>
+  <nav>
+    {% for link in section.settings.menu.links %}
+      <a href="{{ link.url }}">{{ link.title }}</a>
+    {% else %}
+      <a href="{{ routes.all_products_collection_url }}">{{ 'general.shop' | t }}</a>
+    {% endfor %}
+  </nav>
+</aside>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "header-section",
+  "enabled_on": { "groups": ["header"] },
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}
