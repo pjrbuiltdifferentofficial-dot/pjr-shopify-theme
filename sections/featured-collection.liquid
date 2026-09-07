@@ -12,19 +12,9 @@
     </div>
 
     {% assign featured = section.settings.collection %}
-    {% if featured == blank %}
-      {% assign try_handles = 'the-core,core,mens,men,men-s,legacy' | split: ',' %}
-      {% for h in try_handles %}
-        {% if collections[h].products_count > 0 %}
-          {% assign featured = collections[h] %}
-          {% break %}
-        {% endif %}
-      {% endfor %}
-    {% endif %}
-
     <div class="product-grid product-grid--4">
       {% assign shown = 0 %}
-      {% assign limit = section.settings.limit %}
+      {% assign limit = section.settings.limit | times: 1 %}
       {% if featured != blank %}
         {% for product in featured.products %}
           {% if shown >= limit %}{% break %}{% endif %}
