@@ -1,23 +1,26 @@
 <section>
   {% if section.settings.heading != blank %}
-    <div class="page-width" style="padding:2.5rem 0 1.5rem;display:flex;justify-content:space-between;align-items:flex-end;">
+    <div class="page-width" style="padding:2.5rem 0 1.5rem;display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;">
       <div>
         <p class="kicker">{{ section.settings.kicker }}</p>
         <h2 style="margin-top:0.5rem;font-size:var(--text-title);text-transform:uppercase;">{{ section.settings.heading }}</h2>
       </div>
       {% if section.settings.cta != blank %}
-        <a class="btn btn--line" href="{{ section.settings.link }}">{{ section.settings.cta }}</a>
+        <a class="btn btn--line" href="{{ section.settings.link | default: pages.lookbook.url | default: '/pages/lookbook' }}">{{ section.settings.cta }}</a>
       {% endif %}
     </div>
   {% endif %}
   <div class="look-grid">
     {% for block in section.blocks %}
       {% assign href = block.settings.link | default: routes.all_products_collection_url %}
-      <a href="{{ href }}" {{ block.shopify_attributes }}>
+      {% assign labels = 'Kitchen,Fjord,Shift,Line' | split: ',' %}
+      <a href="{{ href }}" class="look-cell" {{ block.shopify_attributes }}>
         {% if block.settings.image != blank %}
           {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: block.settings.alt }}
         {% else %}
-          <img src="{{ block.settings.fallback | asset_url }}" alt="{{ block.settings.alt | escape }}" loading="lazy">
+          <span class="look-ph">
+            <span class="kicker">{{ block.settings.alt | default: labels[forloop.index0] | default: 'PJR' }}</span>
+          </span>
         {% endif %}
       </a>
     {% endfor %}
@@ -39,14 +42,6 @@
       "name": "Shot",
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Image" },
-        { "type": "select", "id": "fallback", "label": "Fallback", "options": [
-          { "value": "lookbook-cliff.jpg", "label": "Cliff" },
-          { "value": "lookbook-rain.jpg", "label": "Rain" },
-          { "value": "hero-kitchen.jpg", "label": "Kitchen" },
-          { "value": "lookbook-fjord.jpg", "label": "Fjord" },
-          { "value": "story-hands.jpg", "label": "Hands" },
-          { "value": "story-kitchen.jpg", "label": "Kitchen wide" }
-        ], "default": "lookbook-cliff.jpg" },
         { "type": "text", "id": "alt", "label": "Caption" },
         { "type": "url", "id": "link", "label": "Link" }
       ]
@@ -56,10 +51,10 @@
     {
       "name": "Lookbook strip",
       "blocks": [
-        { "type": "shot", "settings": { "fallback": "lookbook-cliff.jpg" } },
-        { "type": "shot", "settings": { "fallback": "lookbook-rain.jpg" } },
-        { "type": "shot", "settings": { "fallback": "hero-kitchen.jpg" } },
-        { "type": "shot", "settings": { "fallback": "lookbook-fjord.jpg" } }
+        { "type": "shot", "settings": { "alt": "Kitchen" } },
+        { "type": "shot", "settings": { "alt": "Fjord" } },
+        { "type": "shot", "settings": { "alt": "Shift" } },
+        { "type": "shot", "settings": { "alt": "Line" } }
       ]
     }
   ]
