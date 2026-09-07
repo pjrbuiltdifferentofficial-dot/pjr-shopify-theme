@@ -1,0 +1,133 @@
+{%- comment -%}SEO meta + JSON-LD. Shopify still owns sitemap.xml and robots.txt.{%- endcomment -%}
+{%- liquid
+  assign seo_title = page_title
+  if request.page_type == 'index' and page_title == shop.name
+    assign seo_title = shop.name | append: ' | Premium streetwear for the grind'
+  endif
+  if current_tags
+    assign seo_title = seo_title | append: ' – ' | append: current_tags[0]
+  endif
+  unless seo_title contains shop.name
+    assign seo_title = seo_title | append: ' | ' | append: shop.name
+  endunless
+
+  assign seo_desc = page_description | default: '' | strip_html | strip
+  if seo_desc == blank
+    case request.page_type
+      when 'index'
+        assign seo_desc = 'Heavy jersey. Garment dye. Cut for the shift. Twenty years in the kitchen — no investors, no shortcuts. PJR Built Different.'
+      when 'product'
+        assign seo_desc = product.description | strip_html | strip | truncate: 160
+        if seo_desc == blank
+          assign seo_desc = product.title | append: ' — PJR Built Different. Heavyweight streetwear. Hard work. No days off.'
+        endif
+      when 'collection'
+        assign seo_desc = collection.description | strip_html | strip | truncate: 160
+        if seo_desc == blank
+          assign seo_desc = collection.title | append: ' streetwear — PJR Built Different. Hoodies, tees and garment dye. Built between the shifts.'
+        endif
+      when 'page'
+        assign seo_desc = page.content | strip_html | strip | truncate: 160
+      else
+        assign seo_desc = 'PJR Built Different. Premium streetwear for the grind. Hard work. Real ambition. No days off.'
+    endcase
+  endif
+
+  assign og_type = 'website'
+  assign og_image = settings.share_image | default: page_image
+  if request.page_type == 'product' and product.featured_image
+    assign og_type = 'product'
+    assign og_image = product.featured_image
+  elsif request.page_type == 'collection' and collection.featured_image
+    assign og_image = collection.featured_image
+  elsif request.page_type == 'article' and article.image
+    assign og_image = article.image
+  endif
+-%}
+
+<title>{{ seo_title | escape }}</title>
+<meta name="description" content="{{ seo_desc | escape }}">
+<link rel="canonical" href="{{ canonical_url }}">
+<meta name="robots" content="index, follow">
+
+<meta property="og:site_name" content="{{ shop.name | escape }}">
+<meta property="og:type" content="{{ og_type }}">
+<meta property="og:title" content="{{ seo_title | escape }}">
+<meta property="og:description" content="{{ seo_desc | escape }}">
+<meta property="og:url" content="{{ canonical_url }}">
+{%- if og_image -%}
+  <meta property="og:image" content="https:{{ og_image | image_url: width: 1200 }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:alt" content="{{ seo_title | escape }}">
+{%- endif -%}
+{%- if request.page_type == 'product' -%}
+  <meta property="og:price:amount" content="{{ product.selected_or_first_available_variant.price | money_without_currency | strip }}">
+  <meta property="og:price:currency" content="{{ cart.currency.iso_code }}">
+{%- endif -%}
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ seo_title | escape }}">
+<meta name="twitter:description" content="{{ seo_desc | escape }}">
+{%- if og_image -%}
+  <meta name="twitter:image" content="https:{{ og_image | image_url: width: 1200 }}">
+{%- endif -%}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": {{ shop.url | append: '#organization' | json }},
+      "name": {{ shop.name | json }},
+      "url": {{ shop.url | json }},
+      "brand": "PJR Built Different",
+      "description": "Premium streetwear for the grind. Forged in the kitchen. No investors. No shortcuts.",
+      "sameAs": [{% if settings.social_x != blank %}{{ settings.social_x | json }}{% else %}"https://x.com/BuiltPjr"{% endif %}{% if settings.social_instagram != blank %}, {{ settings.social_instagram | json }}{% endif %}]
+    },
+    {
+      "@type": "WebSite",
+      "@id": {{ shop.url | append: '#website' | json }},
+      "url": {{ shop.url | json }},
+      "name": {{ shop.name | json }},
+      "publisher": { "@id": {{ shop.url | append: '#organization' | json }} },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {{ shop.url | append: '/search?q={search_term_string}' | json }},
+        "query-input": "required name=search_term_string"
+      }
+    }
+    {%- if request.page_type == 'product' -%}
+    ,{
+      "@type": "Product",
+      "name": {{ product.title | json }},
+      "url": {{ canonical_url | json }},
+      "description": {{ seo_desc | json }},
+      "sku": {{ product.selected_or_first_available_variant.sku | default: product.id | json }},
+      "brand": { "@type": "Brand", "name": "PJR Built Different" },
+      {%- if product.featured_image -%}
+      "image": [{% for image in product.images limit: 6 %}{{ image | image_url: width: 1200 | prepend: 'https:' | json }}{% unless forloop.last %},{% endunless %}{% endfor %}],
+      {%- endif -%}
+      "offers": {
+        "@type": "Offer",
+        "url": {{ canonical_url | json }},
+        "priceCurrency": {{ cart.currency.iso_code | json }},
+        "price": {{ product.selected_or_first_available_variant.price | times: 1.0 | divided_by: 100 }},
+        "priceValidUntil": "{{ 'now' | date: '%Y' | plus: 1 }}-12-31",
+        "availability": "{% if product.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+        "seller": { "@id": {{ shop.url | append: '#organization' | json }} }
+      }
+    }
+    {%- endif -%}
+    {%- if request.page_type == 'collection' -%}
+    ,{
+      "@type": "CollectionPage",
+      "name": {{ collection.title | json }},
+      "url": {{ canonical_url | json }},
+      "description": {{ seo_desc | json }},
+      "isPartOf": { "@id": {{ shop.url | append: '#website' | json }} }
+    }
+    {%- endif -%}
+  ]
+}
+</script>
