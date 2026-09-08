@@ -45,7 +45,7 @@
         "c1": {
           "type": "column",
           "settings": {
-            "title": "240–480 gsm",
+            "title": "240\u2013480 gsm",
             "text": "Heavy jersey and loopback fleece that still holds the shoulder after a twelve-hour service."
           }
         },
@@ -79,8 +79,8 @@
         "fallback": "lookbook-fjord.jpg",
         "flip": false,
         "kicker": "Legacy",
-        "heading": "Father & Son — A Bond That Never Breaks",
-        "text": "This brand did not start as a business plan. It started as a promise. Twenty years in the kitchen — twelve of them in Norway — so a son could watch what it looks like to build something with your own hands. No shortcuts. No investors.",
+        "heading": "Father & Son \u2014 A Bond That Never Breaks",
+        "text": "This brand did not start as a business plan. It started as a promise. Twenty years in the kitchen \u2014 twelve of them in Norway \u2014 so a son could watch what it looks like to build something with your own hands. No shortcuts. No investors.",
         "cta": "Shop Legacy",
         "link": "",
         "ghost": false
@@ -93,7 +93,7 @@
         "flip": true,
         "kicker": "Two decades",
         "heading": "On the pass, there is no room to lie.",
-        "text": "The plate either walks or it dies. PJR Built Different is cut from the same tension: cloth, cut, stitch — it holds, or it is out. We do it our way.",
+        "text": "The plate either walks or it dies. PJR Built Different is cut from the same tension: cloth, cut, stitch \u2014 it holds, or it is out. We do it our way.",
         "cta": "Read the story",
         "link": "",
         "ghost": true
@@ -104,7 +104,7 @@
       "settings": {
         "kicker": "Cloth",
         "heading": "Weight you can feel in the hand.",
-        "text": "Ring-spun cotton. Pre-shrunk. Twin-needle. None of this is marketing — it is the spec a tee dies without by the third wash."
+        "text": "Ring-spun cotton. Pre-shrunk. Twin-needle. None of this is marketing \u2014 it is the spec a tee dies without by the third wash."
       }
     },
     "look": {
@@ -155,6 +155,16 @@
         "cta": "Lookbook",
         "link": ""
       }
+    },
+    "pin": {
+      "type": "pin-promo",
+      "settings": {
+        "kicker": "Pinterest",
+        "heading": "PINTEREST10",
+        "text": "10% off. Hard work. Real cloth. Forged in the kitchen.",
+        "cta": "Use the code",
+        "link": "/discount/PINTEREST10"
+      }
     }
   },
   "order": [
@@ -165,6 +175,7 @@
     "father",
     "story",
     "quality",
-    "look"
+    "look",
+    "pin"
   ]
 }
