@@ -11,21 +11,11 @@
     </div>
   {% endif %}
   <div class="look-grid">
-    {% assign fallbacks = 'lookbook-father.jpg,lookbook-crop.jpg,lookbook-bloom.jpg,lookbook-piotr.jpg' | split: ',' %}
-    {% assign labels = 'Kitchen,Fjord,Shift,Line' | split: ',' %}
-    {% for block in section.blocks %}
-      {% assign href = block.settings.link | default: routes.all_products_collection_url %}
-      {% assign fb = fallbacks[forloop.index0] %}
-      <a href="{{ href }}" class="look-cell" {{ block.shopify_attributes }}>
-        {% if fb != blank %}
-          <img src="{{ fb | asset_url }}" alt="{{ block.settings.alt | default: labels[forloop.index0] | escape }}" loading="lazy" width="900" height="1200">
-        {% elsif block.settings.image != blank %}
-          {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: block.settings.alt }}
-        {% else %}
-          <span class="look-ph">
-            <span class="kicker">{{ block.settings.alt | default: labels[forloop.index0] | default: 'PJR' }}</span>
-          </span>
-        {% endif %}
+    {% assign shots = 'lookbook-maroon.jpg,lookbook-fare-front.jpg,lookbook-fare-back.jpg,lookbook-polo.jpg,lookbook-noordinary.jpg,lookbook-woman-noordinary.jpg,lookbook-father.jpg,lookbook-oscar.jpg' | split: ',' %}
+    {% assign labels = 'Maroon,Festival,Festival back,Polo,No Ordinary,No Ordinary,Father,Oscar' | split: ',' %}
+    {% for fb in shots %}
+      <a href="{{ section.settings.link | default: routes.all_products_collection_url }}" class="look-cell">
+        <img src="{{ fb | asset_url }}" alt="{{ labels[forloop.index0] | escape }}" loading="lazy" width="900" height="1200">
       </a>
     {% endfor %}
   </div>
@@ -40,26 +30,6 @@
     { "type": "text", "id": "cta", "label": "Link", "default": "Lookbook" },
     { "type": "url", "id": "link", "label": "URL" }
   ],
-  "blocks": [
-    {
-      "type": "shot",
-      "name": "Shot",
-      "settings": [
-        { "type": "text", "id": "alt", "label": "Caption" },
-        { "type": "url", "id": "link", "label": "Link" }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Lookbook strip",
-      "blocks": [
-        { "type": "shot", "settings": { "alt": "Kitchen" } },
-        { "type": "shot", "settings": { "alt": "Fjord" } },
-        { "type": "shot", "settings": { "alt": "Shift" } },
-        { "type": "shot", "settings": { "alt": "Line" } }
-      ]
-    }
-  ]
+  "presets": [{ "name": "Lookbook strip" }]
 }
 {% endschema %}
