@@ -1,7 +1,9 @@
 <section class="split">
-  <div class="split__media{% if section.settings.image == blank %} split__media--mark{% endif %}" {% if section.settings.flip %}style="order:2"{% endif %}>
+  <div class="split__media{% if section.settings.image == blank and section.settings.fallback == blank %} split__media--mark{% endif %}" {% if section.settings.flip %}style="order:2"{% endif %}>
     {% if section.settings.image != blank %}
       {{ section.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', alt: section.settings.heading }}
+    {% elsif section.settings.fallback != blank %}
+      <img src="{{ section.settings.fallback | asset_url }}" alt="{{ section.settings.heading | escape }}" loading="lazy" width="1600" height="2000">
     {% else %}
       <span class="split__mark">PJR</span>
     {% endif %}
@@ -21,6 +23,13 @@
   "name": "Split story",
   "settings": [
     { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "select", "id": "fallback", "label": "Theme photo if no upload", "options": [
+      { "value": "", "label": "Wordmark" },
+      { "value": "father-son.jpg", "label": "Father & Son" },
+      { "value": "story-kitchen.jpg", "label": "Kitchen 2am" },
+      { "value": "hero-kitchen.jpg", "label": "Kitchen pass" },
+      { "value": "lookbook-hoodie.jpg", "label": "Hoodie rail" }
+    ], "default": "father-son.jpg" },
     { "type": "checkbox", "id": "flip", "label": "Text on the left", "default": false },
     { "type": "text", "id": "kicker", "label": "Kicker", "default": "Legacy" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Father & Son — A Bond That Never Breaks" },

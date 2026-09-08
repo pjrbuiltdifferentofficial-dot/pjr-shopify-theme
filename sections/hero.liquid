@@ -1,6 +1,8 @@
-<section class="hero{% if section.settings.image == blank %} hero--plain{% endif %}">
+<section class="hero">
   {% if section.settings.image != blank %}
     {{ section.settings.image | image_url: width: 2400 | image_tag: class: 'hero__img', alt: section.settings.heading, fetchpriority: 'high' }}
+  {% else %}
+    <img class="hero__img" src="{{ 'hero-kitchen.jpg' | asset_url }}" alt="{{ section.settings.heading | escape }}" fetchpriority="high" width="2400" height="1350">
   {% endif %}
   <div class="hero__shade"></div>
   <div class="page-width hero__content">

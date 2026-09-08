@@ -11,11 +11,15 @@
     </div>
   {% endif %}
   <div class="look-grid">
+    {% assign fallbacks = 'lookbook-kitchen.jpg,lookbook-fjord.jpg,lookbook-hoodie.jpg,lookbook-tee.jpg' | split: ',' %}
+    {% assign labels = 'Kitchen,Fjord,Shift,Line' | split: ',' %}
     {% for block in section.blocks %}
       {% assign href = block.settings.link | default: routes.all_products_collection_url %}
-      {% assign labels = 'Kitchen,Fjord,Shift,Line' | split: ',' %}
+      {% assign fb = fallbacks[forloop.index0] %}
       <a href="{{ href }}" class="look-cell" {{ block.shopify_attributes }}>
-        {% if block.settings.image != blank %}
+        {% if fb != blank %}
+          <img src="{{ fb | asset_url }}" alt="{{ block.settings.alt | default: labels[forloop.index0] | escape }}" loading="lazy" width="900" height="1200">
+        {% elsif block.settings.image != blank %}
           {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: block.settings.alt }}
         {% else %}
           <span class="look-ph">
@@ -41,7 +45,6 @@
       "type": "shot",
       "name": "Shot",
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Image" },
         { "type": "text", "id": "alt", "label": "Caption" },
         { "type": "url", "id": "link", "label": "Link" }
       ]
