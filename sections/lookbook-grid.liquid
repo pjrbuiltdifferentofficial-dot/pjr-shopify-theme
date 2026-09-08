@@ -11,7 +11,7 @@
     </div>
   {% endif %}
   <div class="look-grid">
-    {% assign fallbacks = 'lookbook-kitchen.jpg,lookbook-fjord.jpg,lookbook-hoodie.jpg,lookbook-tee.jpg' | split: ',' %}
+    {% assign fallbacks = 'lookbook-oscar.jpg,lookbook-fjord.jpg,lookbook-hoodie.jpg,lookbook-kitchen.jpg' | split: ',' %}
     {% assign labels = 'Kitchen,Fjord,Shift,Line' | split: ',' %}
     {% for block in section.blocks %}
       {% assign href = block.settings.link | default: routes.all_products_collection_url %}
