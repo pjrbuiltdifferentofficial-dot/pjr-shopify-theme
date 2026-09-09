@@ -7,9 +7,9 @@
         "kicker": "FORGED IN THE KITCHEN",
         "heading": "HARD WORK\nREAL AMBITION\nNO DAYS OFF",
         "btn_label": "Shop the capsule",
-        "btn_link": "/collections/pjr-core",
+        "btn_link": "shopify://collections/pjr-core",
         "btn2_label": "The story",
-        "btn2_link": "/pages/story"
+        "btn2_link": "shopify://pages/story"
       }
     },
     "marquee": {
@@ -27,7 +27,7 @@
         "collection": "pjr-core",
         "limit": 6,
         "cta": "Shop the capsule",
-        "cta_link": "/collections/pjr-core"
+        "cta_link": "shopify://collections/pjr-core"
       }
     },
     "manifesto": {
@@ -49,7 +49,7 @@
         "heading": "Father & Son \u2014 A Bond That Never Breaks",
         "text": "This brand did not start as a business plan. It started as a promise. Twenty years in the kitchen \u2014 twelve of them in Norway \u2014 so a son could watch what it looks like to build something with your own hands. No shortcuts. No investors.",
         "cta": "Shop the capsule",
-        "link": "/collections/pjr-core",
+        "link": "shopify://collections/pjr-core",
         "ghost": false
       }
     },
@@ -62,7 +62,7 @@
         "heading": "On the pass, there is no room to lie.",
         "text": "The plate either walks or it dies. PJR Built Different is cut from the same tension: cloth, cut, stitch \u2014 it holds, or it is out. We do it our way.",
         "cta": "Read the story",
-        "link": "/pages/story",
+        "link": "shopify://pages/story",
         "ghost": true
       }
     },
@@ -77,17 +77,17 @@
     "look": {
       "type": "lookbook-grid",
       "blocks": {
-        "s1": { "type": "shot", "settings": { "fallback": "lookbook-cliff.jpg", "alt": "", "link": "/pages/lookbook" } },
-        "s2": { "type": "shot", "settings": { "fallback": "lookbook-rain.jpg", "alt": "", "link": "/pages/lookbook" } },
-        "s3": { "type": "shot", "settings": { "fallback": "hero-kitchen.jpg", "alt": "", "link": "/pages/lookbook" } },
-        "s4": { "type": "shot", "settings": { "fallback": "lookbook-fjord.jpg", "alt": "", "link": "/pages/lookbook" } }
+        "s1": { "type": "shot", "settings": { "fallback": "lookbook-cliff.jpg", "alt": "", "link": "shopify://pages/lookbook" } },
+        "s2": { "type": "shot", "settings": { "fallback": "lookbook-rain.jpg", "alt": "", "link": "shopify://pages/lookbook" } },
+        "s3": { "type": "shot", "settings": { "fallback": "hero-kitchen.jpg", "alt": "", "link": "shopify://pages/lookbook" } },
+        "s4": { "type": "shot", "settings": { "fallback": "lookbook-fjord.jpg", "alt": "", "link": "shopify://pages/lookbook" } }
       },
       "block_order": ["s1", "s2", "s3", "s4"],
       "settings": {
         "kicker": "Campaign",
         "heading": "Built between the shifts.",
         "cta": "Lookbook",
-        "link": "/pages/lookbook"
+        "link": "shopify://pages/lookbook"
       }
     },
     "pin": {
@@ -97,7 +97,7 @@
         "heading": "Next drop. Not spam.",
         "text": "Heavyweight pieces. No weekly merch cycle. The line is waiting.",
         "cta": "Open the shop",
-        "link": "/collections/pjr-core"
+        "link": "shopify://collections/pjr-core"
       }
     }
   },
