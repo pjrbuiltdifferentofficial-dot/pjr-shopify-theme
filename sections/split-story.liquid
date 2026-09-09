@@ -13,7 +13,14 @@
     <h2>{{ section.settings.heading }}</h2>
     <p>{{ section.settings.text }}</p>
     {% if section.settings.cta != blank %}
-      <a class="btn{% if section.settings.ghost %} btn--ghost{% endif %}" href="{{ section.settings.link | default: routes.all_products_collection_url }}">{{ section.settings.cta }}</a>
+      {% if section.settings.link != blank %}
+        {% assign story_href = section.settings.link %}
+      {% elsif section.settings.ghost %}
+        {% assign story_href = pages.story.url | default: '/pages/story' %}
+      {% else %}
+        {% assign story_href = collections.mens.url | default: routes.all_products_collection_url %}
+      {% endif %}
+      <a class="btn{% if section.settings.ghost %} btn--ghost{% endif %}" href="{{ story_href }}">{{ section.settings.cta }}</a>
     {% endif %}
   </div>
 </section>
@@ -32,8 +39,8 @@
     ], "default": "father-son.jpg" },
     { "type": "checkbox", "id": "flip", "label": "Text on the left", "default": false },
     { "type": "text", "id": "kicker", "label": "Kicker", "default": "Legacy" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Father & Son — A Bond That Never Breaks" },
-    { "type": "textarea", "id": "text", "label": "Text", "default": "This brand did not start as a business plan. It started as a promise. Twenty years in the kitchen — twelve of them in Norway — so a son could watch what it looks like to build something with your own hands. No shortcuts. No investors." },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Father & Son \u2014 A Bond That Never Breaks" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "This brand did not start as a business plan. It started as a promise." },
     { "type": "text", "id": "cta", "label": "Button", "default": "Shop Legacy" },
     { "type": "url", "id": "link", "label": "Link" },
     { "type": "checkbox", "id": "ghost", "label": "Ghost button", "default": false }

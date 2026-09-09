@@ -3,11 +3,11 @@
     "main": {
       "type": "story-page",
       "settings": {
-        "kicker": "Two decades",
-        "heading": "Twenty years on the line.",
+        "kicker": "The story",
+        "heading": "It started as a promise.",
         "show_split": true,
-        "split_heading": "Polish blood. Norwegian winter.",
-        "split_text": "A fjord does not forgive a thin hoodie. The pass does not forgive a lie in the cloth. We do it our way — heavy jersey, garment dye, a cut that survives the shift. No weekly drop for the sake of a drop. A capsule built to stay."
+        "split_heading": "Twenty years. Twelve in Norway.",
+        "split_text": "A son watching what it looks like to build something with your own hands. No shortcuts. No investors. On the pass there is no room to lie. The plate walks, or it dies. Cloth, cut, stitch \u2014 same rule. We do it our way."
       }
     }
   },

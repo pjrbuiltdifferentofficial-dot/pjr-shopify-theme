@@ -5,7 +5,7 @@
     "announcement": {
       "type": "announcement-bar",
       "settings": {
-        "text": "PINTEREST10 \u00b7 10% off \u00b7 Forged in the kitchen"
+        "text": "KITCHEN10 \u00b7 first drop \u00b7 Forged in the kitchen"
       }
     },
     "header": {
@@ -15,8 +15,5 @@
       }
     }
   },
-  "order": [
-    "announcement",
-    "header"
-  ]
+  "order": ["announcement", "header"]
 }

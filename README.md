@@ -4,31 +4,17 @@ Premium dark editorial theme. Hard work. Real ambition. No days off.
 
 **Repo:** https://github.com/pjrbuiltdifferentofficial-dot/pjr-shopify-theme
 
-## Get the zip (Gmail blocks .zip)
+## Connect so changes go live
 
-1. Open this repo on GitHub
-2. Green **Code** button → **Download ZIP**
-3. Shopify Admin → **Online Store → Themes**
-4. Duplicate the current theme (backup)
-5. **Add theme → Upload zip file**
-6. Preview, then Publish
+Online Store → Themes → Add theme → Connect from GitHub → this repo → branch `main`.
+If the store already uses another theme (Dawn etc.), this repo will NOT change pjrbuiltdifferent.com until this theme is published.
 
-Shopify also supports **Connect from GitHub** on this repo if you prefer live deploys.
+## After connect
 
-## After upload
+1. Pages → Story → template `story` (URL `/pages/story`)
+2. Pages → Lookbook → template `lookbook`
+3. Collections → make `mens` (or `pjr-core`) the heavyweight adults only. Keep kids out of it.
+4. Navigation: Shop, Norway, Lookbook, Story, Contact. Kids not in the top bar.
+5. Discount `KITCHEN10` if you want the announcement bar to be real.
 
-**Navigation**
-- Shop → `/collections/all`
-- Story → `/pages/story`
-- Lookbook → `/pages/lookbook`
-
-**Pages**
-- Story → template `story`
-- Lookbook → template `lookbook`
-
-**Homepage**
-Customize → **The capsule** → pick your collection (Printful products stay as they are).
-
-English copy. No free-shipping banner.
-
-Campaign photos (kitchen, fjord, lookbook) can be set in **Customize** on the hero and lookbook sections.
+Homepage capsule reads collection `mens` and skips baby / onesie / vroom titles.
