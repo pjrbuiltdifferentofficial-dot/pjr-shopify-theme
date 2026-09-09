@@ -7,7 +7,7 @@
         "kicker": "FORGED IN THE KITCHEN",
         "heading": "HARD WORK\nREAL AMBITION\nNO DAYS OFF",
         "btn_label": "Shop the capsule",
-        "btn_link": "/collections/mens",
+        "btn_link": "/collections/pjr-core",
         "btn2_label": "The story",
         "btn2_link": "/pages/story"
       }
@@ -24,41 +24,21 @@
         "kicker": "Core",
         "heading": "The capsule",
         "sub": "Not a weekly drop. Pieces built to stay.",
-        "collection": "mens",
+        "collection": "pjr-core",
         "limit": 6,
         "cta": "Shop the capsule",
-        "cta_link": "/collections/mens"
+        "cta_link": "/collections/pjr-core"
       }
     },
     "manifesto": {
       "type": "manifesto",
       "blocks": {
-        "c1": {
-          "type": "column",
-          "settings": {
-            "title": "240\u2013480 gsm",
-            "text": "Heavy jersey and loopback fleece that still holds the shoulder after a twelve-hour service."
-          }
-        },
-        "c2": {
-          "type": "column",
-          "settings": {
-            "title": "Garment dye",
-            "text": "Dyed after the sew. Colour lives in the fibre, not on it. Every piece carries its own shade."
-          }
-        },
-        "c3": {
-          "type": "column",
-          "settings": {
-            "title": "Cut for the shift",
-            "text": "Dropped shoulder, taped collar, a hem that stays put when you bend over the pass."
-          }
-        }
+        "c1": { "type": "column", "settings": { "title": "240\u2013480 gsm", "text": "Heavy jersey and loopback fleece that still holds the shoulder after a twelve-hour service." } },
+        "c2": { "type": "column", "settings": { "title": "Garment dye", "text": "Dyed after the sew. Colour lives in the fibre, not on it. Every piece carries its own shade." } },
+        "c3": { "type": "column", "settings": { "title": "Cut for the shift", "text": "Dropped shoulder, taped collar, a hem that stays put when you bend over the pass." } }
       },
       "block_order": ["c1", "c2", "c3"],
-      "settings": {
-        "heading": "Quality. Not merch."
-      }
+      "settings": { "heading": "Quality. Not merch." }
     },
     "father": {
       "type": "split-story",
@@ -69,7 +49,7 @@
         "heading": "Father & Son \u2014 A Bond That Never Breaks",
         "text": "This brand did not start as a business plan. It started as a promise. Twenty years in the kitchen \u2014 twelve of them in Norway \u2014 so a son could watch what it looks like to build something with your own hands. No shortcuts. No investors.",
         "cta": "Shop the capsule",
-        "link": "/collections/mens",
+        "link": "/collections/pjr-core",
         "ghost": false
       }
     },
@@ -117,7 +97,7 @@
         "heading": "Next drop. Not spam.",
         "text": "Heavyweight pieces. No weekly merch cycle. The line is waiting.",
         "cta": "Open the shop",
-        "link": "/collections/mens"
+        "link": "/collections/pjr-core"
       }
     }
   },
