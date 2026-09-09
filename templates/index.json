@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -6,10 +15,10 @@
         "image": "shopify://shop_images/grok-image-7c0cbd3e-4992-4169-bfc7-e94b36e92e8b.jpg",
         "kicker": "FORGED IN THE KITCHEN",
         "heading": "HARD WORK\nREAL AMBITION\nNO DAYS OFF",
-        "btn_label": "Shop the capsule",
-        "btn_link": "shopify://collections/pjr-core",
+        "btn_label": "The Core",
+        "btn_link": "",
         "btn2_label": "The story",
-        "btn2_link": "shopify://pages/story"
+        "btn2_link": ""
       }
     },
     "marquee": {
@@ -33,12 +42,36 @@
     "manifesto": {
       "type": "manifesto",
       "blocks": {
-        "c1": { "type": "column", "settings": { "title": "240\u2013480 gsm", "text": "Heavy jersey and loopback fleece that still holds the shoulder after a twelve-hour service." } },
-        "c2": { "type": "column", "settings": { "title": "Garment dye", "text": "Dyed after the sew. Colour lives in the fibre, not on it. Every piece carries its own shade." } },
-        "c3": { "type": "column", "settings": { "title": "Cut for the shift", "text": "Dropped shoulder, taped collar, a hem that stays put when you bend over the pass." } }
+        "c1": {
+          "type": "column",
+          "settings": {
+            "title": "240–480 gsm",
+            "text": "Heavy jersey and loopback fleece that still holds the shoulder after a twelve-hour service."
+          }
+        },
+        "c2": {
+          "type": "column",
+          "settings": {
+            "title": "Garment dye",
+            "text": "Dyed after the sew. Colour lives in the fibre, not on it. Every piece carries its own shade."
+          }
+        },
+        "c3": {
+          "type": "column",
+          "settings": {
+            "title": "Cut for the shift",
+            "text": "Dropped shoulder, taped collar, a hem that stays put when you bend over the pass."
+          }
+        }
       },
-      "block_order": ["c1", "c2", "c3"],
-      "settings": { "heading": "Quality. Not merch." }
+      "block_order": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "settings": {
+        "heading": "Quality. Not merch."
+      }
     },
     "father": {
       "type": "split-story",
@@ -46,10 +79,10 @@
         "fallback": "lookbook-fjord.jpg",
         "flip": false,
         "kicker": "Legacy",
-        "heading": "Father & Son \u2014 A Bond That Never Breaks",
-        "text": "This brand did not start as a business plan. It started as a promise. Twenty years in the kitchen \u2014 twelve of them in Norway \u2014 so a son could watch what it looks like to build something with your own hands. No shortcuts. No investors.",
-        "cta": "Shop the capsule",
-        "link": "shopify://collections/pjr-core",
+        "heading": "Father & Son — A Bond That Never Breaks",
+        "text": "This brand did not start as a business plan. It started as a promise. Twenty years in the kitchen — twelve of them in Norway — so a son could watch what it looks like to build something with your own hands. No shortcuts. No investors.",
+        "cta": "Shop Legacy",
+        "link": "",
         "ghost": false
       }
     },
@@ -60,9 +93,9 @@
         "flip": true,
         "kicker": "Two decades",
         "heading": "On the pass, there is no room to lie.",
-        "text": "The plate either walks or it dies. PJR Built Different is cut from the same tension: cloth, cut, stitch \u2014 it holds, or it is out. We do it our way.",
+        "text": "The plate either walks or it dies. PJR Built Different is cut from the same tension: cloth, cut, stitch — it holds, or it is out. We do it our way.",
         "cta": "Read the story",
-        "link": "shopify://pages/story",
+        "link": "",
         "ghost": true
       }
     },
@@ -71,35 +104,27 @@
       "settings": {
         "kicker": "Cloth",
         "heading": "Weight you can feel in the hand.",
-        "text": "Ring-spun cotton. Pre-shrunk. Twin-needle. None of this is marketing \u2014 it is the spec a tee dies without by the third wash."
+        "text": "Ring-spun cotton. Pre-shrunk. Twin-needle. None of this is marketing — it is the spec a tee dies without by the third wash."
       }
     },
     "look": {
       "type": "lookbook-grid",
-      "blocks": {
-        "s1": { "type": "shot", "settings": { "fallback": "lookbook-cliff.jpg", "alt": "", "link": "shopify://pages/lookbook" } },
-        "s2": { "type": "shot", "settings": { "fallback": "lookbook-rain.jpg", "alt": "", "link": "shopify://pages/lookbook" } },
-        "s3": { "type": "shot", "settings": { "fallback": "hero-kitchen.jpg", "alt": "", "link": "shopify://pages/lookbook" } },
-        "s4": { "type": "shot", "settings": { "fallback": "lookbook-fjord.jpg", "alt": "", "link": "shopify://pages/lookbook" } }
-      },
-      "block_order": ["s1", "s2", "s3", "s4"],
       "settings": {
         "kicker": "Campaign",
         "heading": "Built between the shifts.",
         "cta": "Lookbook",
-        "link": "shopify://pages/lookbook"
-      }
-    },
-    "pin": {
-      "type": "pin-promo",
-      "settings": {
-        "kicker": "The line",
-        "heading": "Next drop. Not spam.",
-        "text": "Heavyweight pieces. No weekly merch cycle. The line is waiting.",
-        "cta": "Open the shop",
-        "link": "shopify://collections/pjr-core"
+        "link": ""
       }
     }
   },
-  "order": ["hero", "marquee", "featured", "manifesto", "father", "story", "quality", "look", "pin"]
+  "order": [
+    "hero",
+    "marquee",
+    "featured",
+    "manifesto",
+    "father",
+    "story",
+    "quality",
+    "look"
+  ]
 }
