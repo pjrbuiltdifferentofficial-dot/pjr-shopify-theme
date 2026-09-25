@@ -1,4 +1,4 @@
-<!doctype html>
+<!doctype html> 
 <html lang="{{ request.locale.iso_code }}">
   <head>
     <meta charset="utf-8">
@@ -11,9 +11,12 @@
         assign seo_title = shop.name | append: ' | Premium streetwear for the grind'
       endif
       unless seo_title contains shop.name
-        assign seo_title = seo_title | append: ' | ' | append: shop.name
+        assign seo_title_full = seo_title | append: ' | ' | append: shop.name
+        if seo_title_full.size <= 60
+          assign seo_title = seo_title_full
+        endif
       endunless
-      assign seo_desc = page_description | default: '' | strip_html | strip
+      assign seo_desc = page_description | default: '' | strip_html | strip_newlines | strip | truncate: 155
       if seo_desc == blank
         assign seo_desc = 'Heavy jersey. Garment dye. Cut for the shift. Twenty years in the kitchen — no investors, no shortcuts. PJR Built Different.'
       endif
