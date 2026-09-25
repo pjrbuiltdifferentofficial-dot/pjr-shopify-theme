@@ -18,7 +18,11 @@
       endunless
       assign seo_desc = page_description | default: '' | strip_html | strip_newlines | strip | truncate: 155
       if seo_desc == blank
-        assign seo_desc = 'Heavy jersey. Garment dye. Cut for the shift. Twenty years in the kitchen — no investors, no shortcuts. PJR Built Different.'
+        if request.page_type == 'index'
+          assign seo_desc = 'Heavy jersey. Garment dye. Cut for the shift. Twenty years in the kitchen — no investors, no shortcuts. PJR Built Different.'
+        else
+          assign seo_desc = page_title | append: ' — PJR Built Different. Heavyweight streetwear, made to order and shipped worldwide.' | truncate: 155
+        endif
       endif
     -%}
     <title>{{ seo_title | escape }}</title>
