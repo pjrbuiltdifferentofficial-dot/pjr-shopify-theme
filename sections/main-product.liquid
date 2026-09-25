@@ -49,6 +49,16 @@
         </div>
       {% endfor %}
 
+      {%- assign pf = product.metafields.custom.pf_id.value | append: '' -%}
+      {%- capture size_chart -%}{% render 'pf-specs', pf: pf, part: 'sizes' %}{%- endcapture -%}
+      {%- if size_chart != blank -%}
+        <details class="size-guide">
+          <summary>Size guide</summary>
+          {{ size_chart }}
+          <p class="size-guide__note">Garment measurements in cm, laid flat. Measurements may vary by up to 5 cm.</p>
+        </details>
+      {%- endif -%}
+
       <button
         type="submit"
         class="btn btn--full"
@@ -61,6 +71,12 @@
         {% if current.available %}{{ 'product.add' | t }} — {{ current.price | money }}{% else %}{{ 'product.sold_out' | t }}{% endif %}
       </button>
     {% endform %}
+
+    <ul class="product__assure">
+      <li>Made to order — ships in 2–5 business days</li>
+      <li>Tracked delivery worldwide</li>
+      <li>14-day returns in the EU, EEA, Norway and UK · <a href="{{ shop.refund_policy.url | default: '/policies/refund-policy' }}">Returns policy</a></li>
+    </ul>
 
     <script type="application/json" data-product-json>
       {{ product | json }}
@@ -78,16 +94,31 @@
         {% if product.metafields.descriptors.details != blank %}
           {{ product.metafields.descriptors.details }}
         {% else %}
+          {%- capture pf_details -%}{% render 'pf-specs', pf: pf, part: 'details' %}{%- endcapture -%}
+          {%- if pf_details != blank -%}{{ pf_details }}{%- else -%}
           <ul>
             {% for tag in product.tags %}
               <li>{{ tag }}</li>
             {% endfor %}
           </ul>
+          {%- endif -%}
         {% endif %}
       </div>
     </div>
   </div>
 </div>
+
+<style>
+  .size-guide { margin-top: 1.25rem; font-size: 13px; }
+  .size-guide summary { cursor: pointer; text-transform: uppercase; letter-spacing: .12em; font-size: 12px; text-decoration: underline; text-underline-offset: 3px; }
+  .size-table { width: 100%; border-collapse: collapse; margin-top: .75rem; }
+  .size-table th, .size-table td { border: 1px solid rgba(255,255,255,.15); padding: 6px 8px; text-align: center; }
+  .size-table th { font-weight: 500; }
+  .size-guide__note { opacity: .7; margin-top: .5rem; }
+  .product__assure { list-style: none; padding: 0; margin: 1.25rem 0 0; font-size: 13px; opacity: .85; }
+  .product__assure li { padding: 3px 0; }
+  .product__assure li::before { content: "✓ "; }
+</style>
 
 {% schema %}
 {
