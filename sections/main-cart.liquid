@@ -15,7 +15,7 @@
               <div class="cart-line__title">{{ item.product_title }}</div>
               <div class="cart-line__meta">{{ item.variant_title }} · ×{{ item.quantity }}</div>
             </div>
-            <div>{{ item.final_line_price | money }}</div>
+            <div>{{ item.final_line_price | money_without_trailing_zeros }}</div>
           </div>
         {% endfor %}
       </div>
@@ -23,7 +23,7 @@
         <p class="kicker">{{ 'cart.title' | t }}</p>
         <div class="cart-row" style="margin-top:1rem;">
           <span>{{ 'cart.subtotal' | t }}</span>
-          <span>{{ cart.total_price | money }}</span>
+          <span>{{ cart.total_price | money_without_trailing_zeros }}</span>
         </div>
         <form action="{{ routes.cart_url }}" method="post">
           <button class="btn btn--full" type="submit" name="checkout" style="margin-top:1.5rem;">{{ 'cart.checkout' | t }}</button>
