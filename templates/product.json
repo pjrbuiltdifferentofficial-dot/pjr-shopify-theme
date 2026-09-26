@@ -13,12 +13,6 @@
       "type": "main-product",
       "settings": {}
     },
-    "related": {
-      "type": "related-products",
-      "settings": {
-        "heading": ""
-      }
-    },
     "17890760648e606f7f": {
       "type": "apps",
       "blocks": {
@@ -40,7 +34,6 @@
   },
   "order": [
     "main",
-    "related",
     "17890760648e606f7f"
   ]
 }
