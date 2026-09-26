@@ -19,7 +19,7 @@
       {% endif %}
     </div>
     <span class="product-card__price">
-      {% if product.price_varies %}{{ 'product.from' | t }} {% endif %}{{ product.price | money }}
+      {% if product.price_varies %}{{ 'product.from' | t }} {% endif %}{{ product.price | money_without_trailing_zeros }}
     </span>
   </div>
 </a>
