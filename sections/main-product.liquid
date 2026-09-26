@@ -1,4 +1,8 @@
 {% assign current = product.selected_or_first_available_variant %}
+{%- assign pf = product.metafields.custom.pf_id.value | append: '' -%}
+{%- capture size_chart -%}{% render 'pf-specs', pf: pf, part: 'sizes' %}{%- endcapture -%}
+{%- capture fit_note -%}{% render 'pf-specs', pf: pf, part: 'fit' %}{%- endcapture -%}
+{%- capture pf_details -%}{% render 'pf-specs', pf: pf, part: 'details' %}{%- endcapture -%}
 <div class="page-width product">
   <div>
     <div class="product__stage">
@@ -23,7 +27,7 @@
     {% if product.metafields.descriptors.subtitle != blank %}
       <p class="product__tag">{{ product.metafields.descriptors.subtitle }}</p>
     {% endif %}
-    <p class="product__price" data-product-price>{{ current.price | money }}</p>
+    <p class="product__price" data-product-price>{{ current.price | money_without_trailing_zeros }}</p>
 
     {% assign added_label = 'cart.added' | t %}
     {% assign need_size = 'cart.need_size' | t %}
@@ -49,14 +53,8 @@
         </div>
       {% endfor %}
 
-      {%- assign pf = product.metafields.custom.pf_id.value | append: '' -%}
-      {%- capture size_chart -%}{% render 'pf-specs', pf: pf, part: 'sizes' %}{%- endcapture -%}
       {%- if size_chart != blank -%}
-        <details class="size-guide">
-          <summary>Size guide</summary>
-          {{ size_chart }}
-          <p class="size-guide__note">Garment measurements in cm, laid flat. Measurements may vary by up to 5 cm.</p>
-        </details>
+        <a href="#fit-sizing" class="size-guide-link" data-open-acc="fit-sizing">Size guide</a>
       {%- endif -%}
 
       <button
@@ -64,60 +62,131 @@
         class="btn btn--full"
         style="margin-top:2rem;"
         data-add
-        data-in-stock="{{ 'product.add' | t }} — {{ current.price | money }}"
+        data-in-stock="{{ 'product.add' | t }} — {{ current.price | money_without_trailing_zeros }}"
         data-sold-out="{{ 'product.sold_out' | t }}"
         {% unless current.available %}disabled{% endunless %}
       >
-        {% if current.available %}{{ 'product.add' | t }} — {{ current.price | money }}{% else %}{{ 'product.sold_out' | t }}{% endif %}
+        {% if current.available %}{{ 'product.add' | t }} — {{ current.price | money_without_trailing_zeros }}{% else %}{{ 'product.sold_out' | t }}{% endif %}
       </button>
     {% endform %}
 
     <ul class="product__assure">
-      <li>Made to order — ships in 2–5 business days</li>
+      <li>Made to order — production 2–5 business days</li>
       <li>Tracked delivery worldwide</li>
-      <li>14-day returns in the EU, EEA, Norway and UK · <a href="{{ shop.refund_policy.url | default: '/policies/refund-policy' }}">Returns policy</a></li>
+      <li>14-day returns in the EU, EEA, Norway and UK</li>
     </ul>
 
     <script type="application/json" data-product-json>
       {{ product | json }}
     </script>
 
-    <div class="product-tabs">
-      <div class="product-tabs__nav">
-        <button type="button" class="is-active" data-tab="story">{{ 'product.story' | t }}</button>
-        <button type="button" data-tab="details">{{ 'product.details' | t }}</button>
-      </div>
-      <div class="product-tabs__panel rte" data-tab-panel="story">
-        {{ product.description }}
-      </div>
-      <div class="product-tabs__panel rte" data-tab-panel="details" hidden>
-        {% if product.metafields.descriptors.details != blank %}
-          {{ product.metafields.descriptors.details }}
-        {% else %}
-          {%- capture pf_details -%}{% render 'pf-specs', pf: pf, part: 'details' %}{%- endcapture -%}
-          {%- if pf_details != blank -%}{{ pf_details }}{%- else -%}
-          <ul>
-            {% for tag in product.tags %}
-              <li>{{ tag }}</li>
-            {% endfor %}
-          </ul>
+    {%- if product.description != blank -%}
+      <div class="product__story rte">{{ product.description }}</div>
+    {%- endif -%}
+
+    <div class="product-acc">
+      {%- if size_chart != blank or fit_note != blank -%}
+        <details class="acc" id="fit-sizing">
+          <summary>Fit &amp; sizing</summary>
+          <div class="acc__body">
+            {%- if fit_note != blank -%}<p class="acc__lead">{{ fit_note }}.</p>{%- endif -%}
+            {%- if size_chart != blank -%}
+              <p>Between sizes? Take your normal size for a relaxed fit, size up for a roomier look.</p>
+              {{ size_chart }}
+              <p class="acc__note">Garment measurements in cm, laid flat. Measurements may vary by up to 5 cm.</p>
+            {%- endif -%}
+          </div>
+        </details>
+      {%- endif -%}
+
+      <details class="acc">
+        <summary>Fabric &amp; details</summary>
+        <div class="acc__body rte">
+          {%- if product.metafields.descriptors.details != blank -%}
+            {{ product.metafields.descriptors.details }}
+          {%- elsif pf_details != blank -%}
+            {{ pf_details }}
+          {%- else -%}
+            <ul>
+              {% for tag in product.tags %}
+                <li>{{ tag }}</li>
+              {% endfor %}
+            </ul>
           {%- endif -%}
-        {% endif %}
-      </div>
+          <p class="acc__note">Printed or embroidered to order. No stock, no waste.</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Shipping &amp; returns</summary>
+        <div class="acc__body">
+          <p>Every piece is made to order by our print partner. Production takes 2–5 business days, then delivery usually takes 2–4 weeks. You get a tracking number by email as soon as it ships.</p>
+          <p>EU, EEA (including Norway) and UK: 14-day right of withdrawal, you cover return shipping. Damaged, defective or wrong item: email us within 60 days and we reprint or refund it.</p>
+          <p><a href="/pages/shipping-information">Shipping information</a> · <a href="/policies/refund-policy">Returns policy</a></p>
+        </div>
+      </details>
     </div>
   </div>
 </div>
 
+{%- assign look_collection = collections['pjr-core'] -%}
+{%- if look_collection.products.size > 1 -%}
+  <section class="page-width look">
+    <h2 class="look__title">Complete the look</h2>
+    <div class="look__grid">
+      {%- assign shown = 0 -%}
+      {%- for p in look_collection.products -%}
+        {%- if p.id == product.id or p.available == false -%}{%- continue -%}{%- endif -%}
+        <a class="look__card" href="{{ p.url }}">
+          {%- if p.featured_image -%}
+            {{ p.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: p.title }}
+          {%- endif -%}
+          <span class="look__name">{{ p.title }}</span>
+          <span class="look__price">{{ p.price | money_without_trailing_zeros }}</span>
+        </a>
+        {%- assign shown = shown | plus: 1 -%}
+        {%- if shown >= 3 -%}{%- break -%}{%- endif -%}
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}
+
+<script>
+  document.querySelectorAll('[data-open-acc]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var d = document.getElementById(a.getAttribute('data-open-acc'));
+      if (d) d.open = true;
+    });
+  });
+</script>
+
 <style>
-  .size-guide { margin-top: 1.25rem; font-size: 13px; }
-  .size-guide summary { cursor: pointer; text-transform: uppercase; letter-spacing: .12em; font-size: 12px; text-decoration: underline; text-underline-offset: 3px; }
-  .size-table { width: 100%; border-collapse: collapse; margin-top: .75rem; }
-  .size-table th, .size-table td { border: 1px solid rgba(255,255,255,.15); padding: 6px 8px; text-align: center; }
-  .size-table th { font-weight: 500; }
-  .size-guide__note { opacity: .7; margin-top: .5rem; }
+  .size-guide-link { display: inline-block; margin-top: 1rem; font-size: 12px; text-transform: uppercase; letter-spacing: .12em; text-decoration: underline; text-underline-offset: 3px; }
   .product__assure { list-style: none; padding: 0; margin: 1.25rem 0 0; font-size: 13px; opacity: .85; }
   .product__assure li { padding: 3px 0; }
   .product__assure li::before { content: "✓ "; }
+  .product__story { margin-top: 2rem; }
+  .product-acc { margin-top: 2rem; border-top: 1px solid rgba(255,255,255,.15); }
+  .acc { border-bottom: 1px solid rgba(255,255,255,.15); }
+  .acc summary { cursor: pointer; list-style: none; padding: 1rem 0; text-transform: uppercase; letter-spacing: .12em; font-size: 13px; display: flex; justify-content: space-between; }
+  .acc summary::-webkit-details-marker { display: none; }
+  .acc summary::after { content: "+"; }
+  .acc[open] summary::after { content: "–"; }
+  .acc__body { padding: 0 0 1.25rem; font-size: 14px; }
+  .acc__body p { margin: 0 0 .75rem; }
+  .acc__lead { font-weight: 500; }
+  .acc__note { opacity: .7; font-size: 13px; }
+  .size-table { width: 100%; border-collapse: collapse; margin: .75rem 0; font-size: 13px; }
+  .size-table th, .size-table td { border: 1px solid rgba(255,255,255,.15); padding: 6px 8px; text-align: center; }
+  .size-table th { font-weight: 500; }
+  .look { margin-top: 4rem; margin-bottom: 4rem; }
+  .look__title { text-transform: uppercase; letter-spacing: .08em; margin-bottom: 1.5rem; }
+  .look__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .look__card { display: flex; flex-direction: column; gap: 6px; text-decoration: none; color: inherit; }
+  .look__card img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
+  .look__name { font-size: 13px; }
+  .look__price { font-size: 13px; opacity: .8; }
+  @media (max-width: 640px) { .look__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>
 
 {% schema %}
