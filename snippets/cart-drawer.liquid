@@ -29,7 +29,7 @@
               <button type="button" data-qty="1" aria-label="+">+</button>
             </div>
           </div>
-          <div>{{ item.final_line_price | money }}</div>
+          <div>{{ item.final_line_price | money_without_trailing_zeros }}</div>
         </div>
       {% endfor %}
     </div>
@@ -37,7 +37,7 @@
   <footer class="cart-drawer__foot" data-cart-foot {% if cart.item_count == 0 %}hidden{% endif %}>
     <div class="cart-row">
       <span>{{ 'cart.subtotal' | t }}</span>
-      <span data-cart-subtotal>{{ cart.total_price | money }}</span>
+      <span data-cart-subtotal>{{ cart.total_price | money_without_trailing_zeros }}</span>
     </div>
     <a class="btn btn--full" href="/checkout" style="margin-top:1.25rem;">{{ 'cart.checkout' | t }}</a>
     <button type="button" class="btn btn--line btn--full" data-close-cart style="margin-top:0.75rem;">{{ 'cart.continue' | t }}</button>
