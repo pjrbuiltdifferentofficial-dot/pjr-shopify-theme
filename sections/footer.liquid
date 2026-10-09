@@ -18,10 +18,14 @@
     <div>
       <p class="kicker">{{ section.settings.news_title }}</p>
       <p style="margin-top:1rem;">{{ section.settings.news_body }}</p>
-      {% form 'customer', class: 'newsletter' %}
-        <input type="hidden" name="contact[tags]" value="newsletter">
-        <input class="field" type="email" name="contact[email]" placeholder="{{ section.settings.placeholder }}" required>
-        <button class="btn" type="submit">{{ section.settings.cta }}</button>
+      {% form 'customer', id: 'FooterNewsletter', class: 'newsletter' %}
+        {%- if form.posted_successfully? -%}
+          <p class="newsletter__success">You're in. Your 10% code: <strong>WELCOME10</strong></p>
+        {%- else -%}
+          <input type="hidden" name="contact[tags]" value="newsletter,footer">
+          <input class="field" type="email" name="contact[email]" placeholder="{{ section.settings.placeholder }}" autocomplete="email" required>
+          <button class="btn" type="submit">{{ section.settings.cta }}</button>
+        {%- endif -%}
       {% endform %}
     </div>
   </div>
