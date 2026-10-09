@@ -1,0 +1,82 @@
+{%- comment -%}
+  Email capture popup. Shows once per 7 days after 8s or on exit intent,
+  never on cart. Signs people up through Shopify's own customer form
+  (tags: newsletter, popup) and reveals the welcome code after submit.
+{%- endcomment -%}
+{%- unless request.page_type == 'cart' or request.design_mode -%}
+<div class="pjr-popup" id="PjrPopup" role="dialog" aria-modal="true" aria-labelledby="PjrPopupTitle" hidden>
+  <div class="pjr-popup__backdrop" data-popup-close></div>
+  <div class="pjr-popup__panel">
+    <button class="pjr-popup__close" type="button" aria-label="Close" data-popup-close>&times;</button>
+    {%- assign pjr_popup_posted = false -%}
+    {%- form 'customer', id: 'PjrPopupForm', class: 'pjr-popup__form' -%}
+      {%- if form.posted_successfully? -%}
+        {%- assign pjr_popup_posted = true -%}
+        <p class="kicker">Welcome to the crew</p>
+        <h2 class="pjr-popup__title" id="PjrPopupTitle">You're in.</h2>
+        <p class="pjr-popup__body">10% off your first order. Use it at checkout:</p>
+        <p class="pjr-popup__code">WELCOME10</p>
+        <a class="btn" href="{{ routes.all_products_collection_url }}">Shop now</a>
+      {%- else -%}
+        <p class="kicker">First access. No days off.</p>
+        <h2 class="pjr-popup__title" id="PjrPopupTitle">Not for everyone.</h2>
+        <p class="pjr-popup__body">Built in a professional kitchen. 20 years on the line. No investors, no shortcuts. Get first access to every drop and 10% off your first order.</p>
+        <input type="hidden" name="contact[tags]" value="newsletter,popup">
+        <input class="field" type="email" name="contact[email]" placeholder="Your email" autocomplete="email" required>
+        <button class="btn" type="submit">I'm in</button>
+        {%- if form.errors -%}
+          <p class="pjr-popup__error">{{ form.errors | default_errors }}</p>
+        {%- endif -%}
+        <p class="pjr-popup__fine">No spam. Only drops and the story behind them. Unsubscribe anytime.</p>
+      {%- endif -%}
+    {%- endform -%}
+  </div>
+</div>
+<script>
+  (function () {
+    var popup = document.getElementById('PjrPopup');
+    if (!popup) return;
+    var KEY = 'pjr_popup_seen';
+    var WEEK = 7 * 24 * 60 * 60 * 1000;
+    var posted = {{ pjr_popup_posted | json }};
+    function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+    function set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+    function sget(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }
+    function sset(k, v) { try { sessionStorage.setItem(k, v); } catch (e) {} }
+
+    function open() {
+      if (!popup.hidden) return;
+      popup.hidden = false;
+      document.documentElement.classList.add('pjr-popup-open');
+      set(KEY, String(Date.now()));
+    }
+    function close() {
+      popup.hidden = true;
+      document.documentElement.classList.remove('pjr-popup-open');
+    }
+    popup.querySelectorAll('[data-popup-close]').forEach(function (el) { el.addEventListener('click', close); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+
+    var form = document.getElementById('PjrPopupForm');
+    if (form) form.addEventListener('submit', function () { sset('pjr_popup_submitted', '1'); });
+
+    // Coming back from our own submit (success or error): show the result.
+    if (sget('pjr_popup_submitted') && (posted || popup.querySelector('.pjr-popup__error'))) {
+      if (posted) { try { sessionStorage.removeItem('pjr_popup_submitted'); } catch (e) {} set('pjr_popup_subscribed', '1'); }
+      popup.hidden = true;
+      open();
+      return;
+    }
+
+    if (posted) { set('pjr_popup_subscribed', '1'); return; }
+    if (get('pjr_popup_subscribed')) return;
+    var last = parseInt(get(KEY) || '0', 10);
+    if (Date.now() - last < WEEK) return;
+
+    var timer = setTimeout(open, 8000);
+    document.addEventListener('mouseout', function (e) {
+      if (!e.relatedTarget && e.clientY <= 0) { clearTimeout(timer); open(); }
+    });
+  })();
+</script>
+{%- endunless -%}

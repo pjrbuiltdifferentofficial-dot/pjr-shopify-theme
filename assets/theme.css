@@ -637,3 +637,48 @@ body.is-locked { overflow: hidden; }
 }
 .pin-promo__copy p { margin-top: 1.25rem; max-width: 28rem; color: var(--color-muted); }
 .pin-promo__copy .btn { margin-top: 2rem; width: fit-content; }
+
+/* Email capture popup */
+.pjr-popup { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 1rem; }
+.pjr-popup[hidden] { display: none; }
+.pjr-popup__backdrop { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.72); }
+.pjr-popup__panel {
+  position: relative;
+  width: 100%;
+  max-width: 28rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 2.5rem 2rem 2rem;
+  animation: pjr-popup-in 0.4s var(--ease-out);
+}
+.pjr-popup__close {
+  position: absolute; top: 0.5rem; right: 0.75rem;
+  background: none; border: 0; color: var(--color-muted);
+  font-size: 1.75rem; line-height: 1; cursor: pointer; padding: 0.25rem;
+}
+.pjr-popup__close:hover { color: var(--color-fg); }
+.pjr-popup__title {
+  font-family: var(--font-display);
+  font-size: var(--text-title);
+  text-transform: uppercase;
+  line-height: 1;
+  margin: 0.75rem 0 1rem;
+}
+.pjr-popup__body { color: var(--color-muted); margin: 0 0 1.25rem; }
+.pjr-popup__form { display: flex; flex-direction: column; gap: 0.75rem; }
+.pjr-popup__form .btn { width: 100%; justify-content: center; text-align: center; }
+.pjr-popup__code {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  letter-spacing: 0.15em;
+  border: 1px dashed var(--color-muted);
+  text-align: center;
+  padding: 0.75rem;
+  margin: 0 0 0.5rem;
+}
+.pjr-popup__fine { font-size: 0.75rem; color: var(--color-subtle); margin: 0.25rem 0 0; }
+.pjr-popup__error { font-size: 0.875rem; color: var(--color-danger); margin: 0; }
+.pjr-popup-open { overflow: hidden; }
+.newsletter__success { margin-top: 1rem; color: var(--color-fg); }
+@keyframes pjr-popup-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .pjr-popup__panel { animation: none; } }
