@@ -1,0 +1,53 @@
+{% doc %}
+  Catalog navigation for the header bar and the mobile drawer.
+  @param {string} variant - bar or drawer
+{% enddoc %}
+{%- capture url_new -%}{%- render 'collection-url', handle: 'new-in', fallback: 'mens' -%}{%- endcapture -%}
+{%- capture url_hoodies -%}{%- render 'collection-url', handle: 'hoodies', fallback: 'mens' -%}{%- endcapture -%}
+{%- capture url_tees -%}{%- render 'collection-url', handle: 't-shirts', fallback: 'mens' -%}{%- endcapture -%}
+{%- capture url_sweats -%}{%- render 'collection-url', handle: 'sweatshirts', fallback: 'mens' -%}{%- endcapture -%}
+{%- capture url_headwear -%}{%- render 'collection-url', handle: 'headwear', fallback: 'headwear-collection', fallback_b: 'caps-hats' -%}{%- endcapture -%}
+{%- capture url_men -%}{%- render 'collection-url', handle: 'mens' -%}{%- endcapture -%}
+{%- capture url_women -%}{%- render 'collection-url', handle: 'womens' -%}{%- endcapture -%}
+{%- capture url_xmas -%}{%- render 'collection-url', handle: 'christmas-2026' -%}{%- endcapture -%}
+{%- capture url_accessories -%}{%- render 'collection-url', handle: 'lifestyle-accessories' -%}{%- endcapture -%}
+{%- capture url_b2b -%}{%- if pages['b2b'] != blank -%}{{ pages['b2b'].url }}{%- else -%}/pages/b2b{%- endif -%}{%- endcapture -%}
+{%- assign url_new = url_new | strip -%}
+{%- assign url_hoodies = url_hoodies | strip -%}
+{%- assign url_tees = url_tees | strip -%}
+{%- assign url_sweats = url_sweats | strip -%}
+{%- assign url_headwear = url_headwear | strip -%}
+{%- assign url_men = url_men | strip -%}
+{%- assign url_women = url_women | strip -%}
+{%- assign url_xmas = url_xmas | strip -%}
+{%- assign url_accessories = url_accessories | strip -%}
+{%- assign url_b2b = url_b2b | strip -%}
+{%- if variant == 'drawer' -%}
+  <p class="kicker nav-drawer__label">{{ 'nav.shop' | t }}</p>
+  <a class="nav-drawer__sub" href="{{ url_new }}">{{ 'nav.new_in' | t }}</a>
+  <a class="nav-drawer__sub" href="{{ url_hoodies }}">{{ 'nav.hoodies' | t }}</a>
+  <a class="nav-drawer__sub" href="{{ url_tees }}">{{ 'nav.tshirts' | t }}</a>
+  <a class="nav-drawer__sub" href="{{ url_sweats }}">{{ 'nav.sweatshirts' | t }}</a>
+  <a class="nav-drawer__sub" href="{{ url_headwear }}">{{ 'nav.headwear' | t }}</a>
+  <a class="nav-drawer__top" href="{{ url_men }}">{{ 'nav.men' | t }}</a>
+  <a class="nav-drawer__top" href="{{ url_women }}">{{ 'nav.women' | t }}</a>
+  <a class="nav-drawer__top" href="{{ url_xmas }}">{{ 'nav.christmas' | t }}</a>
+  <a class="nav-drawer__top" href="{{ url_accessories }}">{{ 'nav.accessories' | t }}</a>
+  <a class="nav-drawer__top" href="{{ url_b2b }}">{{ 'nav.b2b' | t }}</a>
+{%- else -%}
+  <div class="nav-drop" data-nav-drop>
+    <button type="button" class="nav-drop__btn" aria-expanded="false" data-nav-toggle>{{ 'nav.shop' | t }}</button>
+    <div class="nav-drop__panel">
+      <a href="{{ url_new }}">{{ 'nav.new_in' | t }}</a>
+      <a href="{{ url_hoodies }}">{{ 'nav.hoodies' | t }}</a>
+      <a href="{{ url_tees }}">{{ 'nav.tshirts' | t }}</a>
+      <a href="{{ url_sweats }}">{{ 'nav.sweatshirts' | t }}</a>
+      <a href="{{ url_headwear }}">{{ 'nav.headwear' | t }}</a>
+    </div>
+  </div>
+  <a href="{{ url_men }}">{{ 'nav.men' | t }}</a>
+  <a href="{{ url_women }}">{{ 'nav.women' | t }}</a>
+  <a href="{{ url_xmas }}">{{ 'nav.christmas' | t }}</a>
+  <a href="{{ url_accessories }}">{{ 'nav.accessories' | t }}</a>
+  <a href="{{ url_b2b }}">{{ 'nav.b2b' | t }}</a>
+{%- endif -%}

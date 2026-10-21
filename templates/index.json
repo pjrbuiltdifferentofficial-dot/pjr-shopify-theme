@@ -1,12 +1,3 @@
-/* 
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "hero": {
@@ -15,116 +6,67 @@
         "image": "shopify://shop_images/grok-image-7c0cbd3e-4992-4169-bfc7-e94b36e92e8b.jpg",
         "kicker": "FORGED IN THE KITCHEN",
         "heading": "HARD WORK\nREAL AMBITION\nNO DAYS OFF",
-        "btn_label": "The Core",
+        "btn_label": "New in",
         "btn_link": "",
         "btn2_label": "The story",
         "btn2_link": ""
       }
     },
-    "marquee": {
-      "type": "marquee",
+    "newin": {
+      "type": "catalog-grid",
       "settings": {
-        "text": "FORGED IN THE KITCHEN | TWENTY YEARS | NO INVESTORS | NO SHORTCUTS | FOR THE SON | WE DO IT OUR WAY | HARD WORK | NO DAYS OFF"
+        "kicker": "Just cut",
+        "heading": "New in",
+        "sub": "The newest clothes. Made to order.",
+        "collection_handle": "new-in",
+        "fallback_handle": "mens",
+        "fallback_pool": true,
+        "apparel_only": true,
+        "newest_first": true,
+        "limit": 8,
+        "cta": "Shop new in"
       }
     },
-    "featured": {
-      "type": "featured-collection",
-      "settings": {
-        "kicker": "Core",
-        "heading": "The capsule",
-        "sub": "Not a weekly drop. Pieces built to stay.",
-        "collection": "pjr-core",
-        "limit": 6,
-        "cta": "Shop the capsule",
-        "cta_link": "shopify://collections/pjr-core"
-      }
-    },
-    "manifesto": {
-      "type": "manifesto",
+    "cats": {
+      "type": "category-tiles",
       "blocks": {
-        "c1": {
-          "type": "column",
-          "settings": {
-            "title": "240–480 gsm",
-            "text": "Heavy jersey and loopback fleece that still holds the shoulder after a twelve-hour service."
-          }
-        },
-        "c2": {
-          "type": "column",
-          "settings": {
-            "title": "Garment dye",
-            "text": "Dyed after the sew. Colour lives in the fibre, not on it. Every piece carries its own shade."
-          }
-        },
-        "c3": {
-          "type": "column",
-          "settings": {
-            "title": "Cut for the shift",
-            "text": "Dropped shoulder, taped collar, a hem that stays put when you bend over the pass."
-          }
-        }
+        "hoodies": { "type": "tile", "settings": { "label": "Hoodies", "handle": "hoodies", "fallback": "mens" } },
+        "tees": { "type": "tile", "settings": { "label": "T-shirts", "handle": "t-shirts", "fallback": "mens" } },
+        "sweats": { "type": "tile", "settings": { "label": "Sweatshirts", "handle": "sweatshirts", "fallback": "mens" } },
+        "headwear": { "type": "tile", "settings": { "label": "Headwear", "handle": "headwear", "fallback": "headwear-collection", "fallback_b": "caps-hats" } },
+        "men": { "type": "tile", "settings": { "label": "Men", "handle": "mens" } },
+        "women": { "type": "tile", "settings": { "label": "Women", "handle": "womens" } }
       },
-      "block_order": [
-        "c1",
-        "c2",
-        "c3"
-      ],
+      "block_order": ["hoodies", "tees", "sweats", "headwear", "men", "women"],
       "settings": {
-        "heading": "Quality. Not merch."
+        "kicker": "Catalog",
+        "heading": "Shop by cut"
       }
     },
-    "father": {
-      "type": "split-story",
+    "xmas": {
+      "type": "catalog-grid",
       "settings": {
-        "fallback": "lookbook-fjord.jpg",
-        "flip": false,
-        "kicker": "Legacy",
-        "heading": "Father & Son — A Bond That Never Breaks",
-        "text": "This brand did not start as a business plan. It started as a promise. Twenty years in the kitchen — twelve of them in Norway — so a son could watch what it looks like to build something with your own hands. No shortcuts. No investors.",
-        "cta": "Shop Legacy",
-        "link": "",
-        "ghost": false
+        "kicker": "Season",
+        "heading": "Christmas 2026",
+        "sub": "Hoodies for the cold shift.",
+        "collection_handle": "christmas-2026",
+        "fallback_handle": "christmas-2026",
+        "fallback_pool": false,
+        "apparel_only": true,
+        "newest_first": false,
+        "limit": 4,
+        "cta": "Shop Christmas"
       }
     },
-    "story": {
-      "type": "split-story",
+    "b2b": {
+      "type": "b2b-banner",
       "settings": {
-        "fallback": "story-hands.jpg",
-        "flip": true,
-        "kicker": "Two decades",
-        "heading": "On the pass, there is no room to lie.",
-        "text": "The plate either walks or it dies. PJR Built Different is cut from the same tension: cloth, cut, stitch — it holds, or it is out. We do it our way.",
-        "cta": "Read the story",
-        "link": "",
-        "ghost": true
-      }
-    },
-    "quality": {
-      "type": "quality-band",
-      "settings": {
-        "kicker": "Cloth",
-        "heading": "Weight you can feel in the hand.",
-        "text": "Ring-spun cotton. Pre-shrunk. Twin-needle. None of this is marketing — it is the spec a tee dies without by the third wash. Every PJR Built Different piece is made to order: heavyweight t-shirts, hoodies, sweatshirts and caps for men, women and kids, printed or embroidered after you order, so nothing sits in a warehouse and nothing gets thrown away. Production takes 2–5 business days, then we ship worldwide with tracking. In the EU, EEA, Norway and the UK you get a 14-day right of withdrawal, and anything that arrives damaged or wrong is reprinted or refunded."
-      }
-    },
-    "look": {
-      "type": "lookbook-grid",
-      "settings": {
-        "kicker": "Campaign",
-        "heading": "Built between the shifts.",
-        "cta": "Lookbook",
-        "link": ""
+        "kicker": "Teams",
+        "heading": "Branded merch for kitchens, gyms, and companies.",
+        "text": "Custom workwear from PJR Built Different, made to order. Tell us the crew size and when you need it.",
+        "cta": "Request a quote"
       }
     }
   },
-  "order": [
-    "hero",
-    "marquee",
-    "featured",
-    "manifesto",
-    "father",
-    "story",
-    "quality",
-    "look"
-  ]
+  "order": ["hero", "newin", "cats", "xmas", "b2b"]
 }

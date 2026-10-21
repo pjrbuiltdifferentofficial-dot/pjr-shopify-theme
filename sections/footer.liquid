@@ -11,8 +11,12 @@
         {% for link in section.settings.menu.links %}
           <li><a href="{{ link.url }}">{{ link.title }}</a></li>
         {% else %}
-          <li><a href="{{ routes.all_products_collection_url }}">{{ 'general.shop' | t }}</a></li>
+          {%- capture new_url -%}{%- render 'collection-url', handle: 'new-in', fallback: 'mens' -%}{%- endcapture -%}
+          <li><a href="{{ new_url | strip }}">{{ 'nav.new_in' | t }}</a></li>
         {% endfor %}
+          <li><a href="{% if pages['b2b'] != blank %}{{ pages['b2b'].url }}{% else %}/pages/b2b{% endif %}">{{ 'nav.b2b' | t }}</a></li>
+          <li><a href="{% if pages.story != blank %}{{ pages.story.url }}{% else %}/pages/story{% endif %}">{{ 'nav.story' | t }}</a></li>
+          <li><a href="{% if pages.lookbook != blank %}{{ pages.lookbook.url }}{% else %}/pages/lookbook{% endif %}">{{ 'nav.lookbook' | t }}</a></li>
       </ul>
     </div>
     <div>
@@ -20,7 +24,7 @@
       <p style="margin-top:1rem;">{{ section.settings.news_body }}</p>
       {% form 'customer', id: 'FooterNewsletter', class: 'newsletter' %}
         {%- if form.posted_successfully? -%}
-          <p class="newsletter__success">You're in. Your 10% code: <strong>WELCOME10</strong></p>
+          <p class="newsletter__success">{{ 'newsletter.success' | t }}</p>
         {%- else -%}
           <input type="hidden" name="contact[tags]" value="newsletter,footer">
           <input class="field" type="email" name="contact[email]" placeholder="{{ section.settings.placeholder }}" autocomplete="email" required>

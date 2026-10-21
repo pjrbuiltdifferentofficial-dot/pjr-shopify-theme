@@ -7,12 +7,24 @@
   {% endif %}
 
   <div class="filters">
-    <a class="filter-chip{% if collection.handle == 'all' %} is-active{% endif %}" href="{{ routes.all_products_collection_url }}">{{ 'collections.all' | t }}</a>
-    {% for col in collections %}
-      {% unless col.handle == 'all' %}
-        <a class="filter-chip{% if collection.handle == col.handle %} is-active{% endif %}" href="{{ col.url }}">{{ col.title }}</a>
-      {% endunless %}
-    {% endfor %}
+    {%- capture url_new -%}{%- render 'collection-url', handle: 'new-in', fallback: 'mens' -%}{%- endcapture -%}
+    {%- capture url_hoodies -%}{%- render 'collection-url', handle: 'hoodies', fallback: 'mens' -%}{%- endcapture -%}
+    {%- capture url_tees -%}{%- render 'collection-url', handle: 't-shirts', fallback: 'mens' -%}{%- endcapture -%}
+    {%- capture url_sweats -%}{%- render 'collection-url', handle: 'sweatshirts', fallback: 'mens' -%}{%- endcapture -%}
+    {%- capture url_headwear -%}{%- render 'collection-url', handle: 'headwear', fallback: 'headwear-collection', fallback_b: 'caps-hats' -%}{%- endcapture -%}
+    {%- capture url_men -%}{%- render 'collection-url', handle: 'mens' -%}{%- endcapture -%}
+    {%- capture url_women -%}{%- render 'collection-url', handle: 'womens' -%}{%- endcapture -%}
+    {%- capture url_xmas -%}{%- render 'collection-url', handle: 'christmas-2026' -%}{%- endcapture -%}
+    {%- capture url_accessories -%}{%- render 'collection-url', handle: 'lifestyle-accessories' -%}{%- endcapture -%}
+    <a class="filter-chip{% if collection.handle == 'new-in' %} is-active{% endif %}" href="{{ url_new | strip }}">{{ 'nav.new_in' | t }}</a>
+    <a class="filter-chip{% if collection.handle == 'hoodies' %} is-active{% endif %}" href="{{ url_hoodies | strip }}">{{ 'nav.hoodies' | t }}</a>
+    <a class="filter-chip{% if collection.handle == 't-shirts' %} is-active{% endif %}" href="{{ url_tees | strip }}">{{ 'nav.tshirts' | t }}</a>
+    <a class="filter-chip{% if collection.handle == 'sweatshirts' %} is-active{% endif %}" href="{{ url_sweats | strip }}">{{ 'nav.sweatshirts' | t }}</a>
+    <a class="filter-chip{% if collection.handle == 'headwear' or collection.handle == 'headwear-collection' or collection.handle == 'caps-hats' %} is-active{% endif %}" href="{{ url_headwear | strip }}">{{ 'nav.headwear' | t }}</a>
+    <a class="filter-chip{% if collection.handle == 'mens' %} is-active{% endif %}" href="{{ url_men | strip }}">{{ 'nav.men' | t }}</a>
+    <a class="filter-chip{% if collection.handle == 'womens' %} is-active{% endif %}" href="{{ url_women | strip }}">{{ 'nav.women' | t }}</a>
+    <a class="filter-chip{% if collection.handle == 'christmas-2026' %} is-active{% endif %}" href="{{ url_xmas | strip }}">{{ 'nav.christmas' | t }}</a>
+    <a class="filter-chip{% if collection.handle == 'lifestyle-accessories' %} is-active{% endif %}" href="{{ url_accessories | strip }}">{{ 'nav.accessories' | t }}</a>
   </div>
 
   <p class="kicker" style="margin-bottom:1.5rem;">{{ collection.products_count }}</p>

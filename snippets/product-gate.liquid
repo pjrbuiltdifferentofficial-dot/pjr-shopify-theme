@@ -1,0 +1,27 @@
+{% doc %}
+  Echoes "skip" when a product must not be rendered.
+  Blocks any handle or title containing bober or qrwa.
+  Pass apparel_only to also block mugs, aprons, and socks.
+  @param {product} product
+  @param {boolean} [apparel_only]
+{% enddoc %}
+{%- liquid
+  assign handle_down = product.handle | downcase
+  assign title_down = product.title | downcase
+  assign type_down = product.type | downcase
+  assign blocked = false
+  if handle_down contains 'bober' or title_down contains 'bober' or title_down contains 'qrwa'
+    assign blocked = true
+  endif
+  if apparel_only
+    if type_down contains 'mug' or type_down contains 'apron' or type_down contains 'sock'
+      assign blocked = true
+    endif
+    if title_down contains 'mug' or title_down contains 'apron' or title_down contains 'sock'
+      assign blocked = true
+    endif
+  endif
+  if blocked
+    echo 'skip'
+  endif
+-%}

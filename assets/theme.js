@@ -54,7 +54,7 @@
     try {
       return new Intl.NumberFormat(document.documentElement.lang || "en", {
         style: "currency",
-        currency: window.Shopify?.currency?.active || "USD",
+        currency: window.Shopify?.currency?.active || "NOK",
       }).format(cents / 100);
     } catch {
       return (cents / 100).toFixed(2);
@@ -149,13 +149,18 @@
         const variant = findVariant();
         if (variant && select) {
           select.value = variant.id;
-          if (priceEl) priceEl.textContent = money(variant.price);
+          const label = money(variant.price);
+          if (priceEl) priceEl.textContent = label;
+          const stickyPrice = $("[data-sticky-price]");
+          if (stickyPrice) stickyPrice.textContent = label;
           if (addBtn) {
             addBtn.disabled = !variant.available;
             addBtn.textContent = variant.available
               ? addBtn.dataset.inStock
               : addBtn.dataset.soldOut;
           }
+          const stickyAdd = $("[data-sticky-add]");
+          if (stickyAdd) stickyAdd.disabled = !variant.available;
         }
       });
     });
@@ -184,15 +189,55 @@
         })
         .catch(() => toast("—"));
     });
+
+    const sticky = $("[data-sticky-atc]");
+    const stickyAdd = $("[data-sticky-add]");
+    if (sticky && addBtn && window.matchMedia("(max-width: 1023px)").matches) {
+      const observer = new IntersectionObserver((entries) => {
+        const entry = entries[0];
+        const past = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+        sticky.hidden = !past;
+        document.body.classList.toggle("has-sticky-atc", past);
+      });
+      observer.observe(addBtn);
+    }
+    stickyAdd?.addEventListener("click", () => {
+      if (typeof productForm.requestSubmit === "function") productForm.requestSubmit();
+      else productForm.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
+    });
   }
 
   $$("[data-thumb]").forEach((btn) => {
     btn.addEventListener("click", () => {
       $$("[data-thumb]").forEach((b) => b.classList.remove("is-active"));
       btn.classList.add("is-active");
-      const stage = $("[data-stage]");
-      if (stage) stage.src = btn.dataset.thumb;
+      const stage = $(".product__stage img");
+      if (!stage) return;
+      if (btn.dataset.src) stage.src = btn.dataset.src;
+      if (btn.dataset.srcset) stage.srcset = btn.dataset.srcset;
     });
+  });
+
+  const closeNavDrops = () => {
+    $$("[data-nav-drop]").forEach((drop) => {
+      drop.classList.remove("is-open");
+      drop.querySelector("[data-nav-toggle]")?.setAttribute("aria-expanded", "false");
+    });
+  };
+  document.addEventListener("click", (e) => {
+    const toggle = e.target.closest("[data-nav-toggle]");
+    if (!toggle) {
+      if (!e.target.closest("[data-nav-drop]")) closeNavDrops();
+      return;
+    }
+    const drop = toggle.closest("[data-nav-drop]");
+    const open = !drop.classList.contains("is-open");
+    closeNavDrops();
+    drop.classList.toggle("is-open", open);
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeNavDrops();
   });
 
   $$("[data-tab]").forEach((btn) => {

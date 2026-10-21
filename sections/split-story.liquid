@@ -18,7 +18,8 @@
       {% elsif section.settings.ghost %}
         {% assign story_href = pages.story.url | default: '/pages/story' %}
       {% else %}
-        {% assign story_href = collections.mens.url | default: routes.all_products_collection_url %}
+        {%- capture story_href -%}{%- render 'collection-url', handle: 'new-in', fallback: 'mens' -%}{%- endcapture -%}
+        {%- assign story_href = story_href | strip -%}
       {% endif %}
       <a class="btn{% if section.settings.ghost %} btn--ghost{% endif %}" href="{{ story_href }}">{{ section.settings.cta }}</a>
     {% endif %}

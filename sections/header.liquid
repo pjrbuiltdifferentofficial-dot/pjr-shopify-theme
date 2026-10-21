@@ -1,15 +1,13 @@
 <header class="site-header">
   <div class="page-width site-header__inner">
-    <button type="button" class="menu-toggle" data-open-menu aria-label="{{ 'general.menu' | t }}">
-      {% render 'icon-menu' %}
-    </button>
-    <nav class="site-header__nav">
-      {% for link in section.settings.menu.links %}
-        <a href="{{ link.url }}">{{ link.title }}</a>
-      {% else %}
-        <a href="{{ routes.all_products_collection_url }}">{{ 'general.shop' | t }}</a>
-      {% endfor %}
-    </nav>
+    <div class="site-header__lead">
+      <button type="button" class="menu-toggle" data-open-menu aria-label="{{ 'general.menu' | t }}">
+        {% render 'icon-menu' %}
+      </button>
+      <nav class="site-header__nav" aria-label="{{ 'nav.shop' | t }}">
+        {% render 'site-nav', variant: 'bar' %}
+      </nav>
+    </div>
     {% render 'wordmark' %}
     <div class="site-header__actions">
       <a href="{{ routes.cart_url }}" class="site-header__icon" data-open-cart aria-label="{{ 'general.cart' | t }}">
@@ -29,11 +27,7 @@
     </button>
   </div>
   <nav>
-    {% for link in section.settings.menu.links %}
-      <a href="{{ link.url }}">{{ link.title }}</a>
-    {% else %}
-      <a href="{{ routes.all_products_collection_url }}">{{ 'general.shop' | t }}</a>
-    {% endfor %}
+    {% render 'site-nav', variant: 'drawer' %}
   </nav>
 </aside>
 
@@ -47,6 +41,7 @@
       "type": "link_list",
       "id": "menu",
       "label": "Menu",
+      "info": "Not used. Header links are the catalog menu in the theme.",
       "default": "main-menu"
     }
   ]

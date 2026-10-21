@@ -28,6 +28,9 @@
     <title>{{ seo_title | escape }}</title>
     <meta name="description" content="{{ seo_desc | escape }}">
     <link rel="canonical" href="{{ canonical_url }}">
+    {%- if request.page_type == 'search' -%}
+      <meta name="robots" content="noindex, follow">
+    {%- endif -%}
     <meta property="og:site_name" content="{{ shop.name | escape }}">
     <meta property="og:title" content="{{ seo_title | escape }}">
     <meta property="og:description" content="{{ seo_desc | escape }}">
@@ -40,7 +43,7 @@
     {%- endif %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400&family=Oswald:wght@600&display=swap" rel="stylesheet">
     {{ 'theme.css' | asset_url | stylesheet_tag }}
     {{ 'theme-edit.css' | asset_url | stylesheet_tag }}
     {% if settings.favicon %}
@@ -233,6 +236,19 @@
     {%- endif %}
 
     {{ content_for_header }}
+    {%- unless request.page_type == 'product' -%}
+      <script>
+        (function () {
+          var links = document.querySelectorAll('link[rel="stylesheet"]');
+          for (var i = 0; i < links.length; i++) {
+            var href = (links[i].getAttribute('href') || '').toLowerCase();
+            if (href.indexOf('judgeme') !== -1 || href.indexOf('judge.me') !== -1 || href.indexOf('judge-me') !== -1) {
+              links[i].parentNode.removeChild(links[i]);
+            }
+          }
+        })();
+      </script>
+    {%- endunless -%}
   </head>
   <body>
     <a class="visually-hidden" href="#MainContent">{{ 'general.skip' | t }}</a>
@@ -242,8 +258,6 @@
     </main>
     {% sections 'footer-group' %}
     {% render 'cart-drawer' %}
-    {% render 'email-popup' %}
     <script src="{{ 'theme.js' | asset_url }}" defer></script>
-    <script async data-id="101513644" src="//static.getclicky.com/js"></script>
   </body>
 </html>

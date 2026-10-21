@@ -10,10 +10,15 @@
         {% endif %}
       {% endfor %}
       {% if shown == 0 %}
-        {% for rec in collections.all.products %}
+        {% assign related_pool = collections.mens.products | concat: collections.womens.products | sort: 'created_at' | reverse %}
+        {% for rec in related_pool %}
           {% if rec.id != product.id and shown < 3 %}
-            {% render 'product-card', product: rec %}
-            {% assign shown = shown | plus: 1 %}
+            {% capture gate %}{% render 'product-gate', product: rec, apparel_only: true %}{% endcapture %}
+            {% assign gate = gate | strip %}
+            {% if gate == blank %}
+              {% render 'product-card', product: rec %}
+              {% assign shown = shown | plus: 1 %}
+            {% endif %}
           {% endif %}
         {% endfor %}
       {% endif %}

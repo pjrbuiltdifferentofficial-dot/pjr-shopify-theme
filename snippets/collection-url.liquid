@@ -1,0 +1,20 @@
+{% doc %}
+  Prints the URL of the first collection handle that has products.
+  @param {string} handle - Preferred collection handle
+  @param {string} [fallback] - Used when the preferred collection is missing or empty
+  @param {string} [fallback_b] - Final collection handle
+{% enddoc %}
+{%- liquid
+  assign chosen = collections[handle]
+  if chosen.products_count == 0 and fallback != blank
+    assign chosen = collections[fallback]
+  endif
+  if chosen.products_count == 0 and fallback_b != blank
+    assign chosen = collections[fallback_b]
+  endif
+  if chosen.url != blank
+    echo chosen.url
+  else
+    echo routes.root_url
+  endif
+-%}

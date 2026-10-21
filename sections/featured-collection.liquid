@@ -7,7 +7,8 @@
         {% if section.settings.sub != blank %}<p class="section__sub">{{ section.settings.sub }}</p>{% endif %}
       </div>
       {% if section.settings.cta != blank %}
-        <a class="btn btn--line" href="{{ section.settings.cta_link | default: collections.mens.url | default: routes.all_products_collection_url }}">{{ section.settings.cta }}</a>
+        {%- capture featured_url -%}{%- render 'collection-url', handle: 'new-in', fallback: 'mens' -%}{%- endcapture -%}
+        <a class="btn btn--line" href="{{ section.settings.cta_link | default: featured_url | strip }}">{{ section.settings.cta }}</a>
       {% endif %}
     </div>
 
@@ -20,30 +21,25 @@
           {% if shown >= limit %}{% break %}{% endif %}
           {% assign t = product.title | downcase %}
           {% assign ty = product.type | downcase %}
-          {% if t contains 'baby' or t contains 'onesie' or t contains 'infant' or t contains 'toddler' or t contains 'vroom' or t contains 'kids' or ty contains 'kid' or ty contains 'baby' %}
+          {% capture gate %}{% render 'product-gate', product: product, apparel_only: true %}{% endcapture %}
+          {% assign gate = gate | strip %}
+          {% if gate != blank or t contains 'baby' or t contains 'onesie' or t contains 'infant' or t contains 'toddler' or t contains 'vroom' or t contains 'kids' or ty contains 'kid' or ty contains 'baby' %}
           {% else %}
             {% render 'product-card', product: product %}
             {% assign shown = shown | plus: 1 %}
           {% endif %}
         {% endfor %}
       {% else %}
-        {% for product in collections.mens.products %}
+        {% assign fallback_pool = collections.mens.products | concat: collections.womens.products | sort: 'created_at' | reverse %}
+        {% for product in fallback_pool %}
           {% if shown >= limit %}{% break %}{% endif %}
-          {% render 'product-card', product: product %}
-          {% assign shown = shown | plus: 1 %}
+          {% capture gate %}{% render 'product-gate', product: product, apparel_only: true %}{% endcapture %}
+          {% assign gate = gate | strip %}
+          {% if gate == blank %}
+            {% render 'product-card', product: product %}
+            {% assign shown = shown | plus: 1 %}
+          {% endif %}
         {% endfor %}
-        {% if shown == 0 %}
-          {% for product in collections.all.products %}
-            {% if shown >= limit %}{% break %}{% endif %}
-            {% assign t = product.title | downcase %}
-            {% assign ty = product.type | downcase %}
-            {% if t contains 'bikini' or t contains 'rash' or t contains 'swim' or t contains 'baby' or t contains 'onesie' or t contains 'vroom' or t contains 'kids' or t contains 'toddler' or ty contains 'swim' or ty contains 'kid' or ty contains 'baby' %}
-            {% else %}
-              {% render 'product-card', product: product %}
-              {% assign shown = shown | plus: 1 %}
-            {% endif %}
-          {% endfor %}
-        {% endif %}
       {% endif %}
     </div>
   </div>

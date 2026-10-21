@@ -7,14 +7,25 @@
   <div>
     <div class="product__stage">
       {% if product.featured_image %}
-        <img data-stage src="{{ product.featured_image | image_url: width: 1400 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}">
+        {{ product.featured_image | image_url: width: 1400 | image_tag: class: 'product__photo', widths: '400, 600, 900, 1200, 1400', sizes: '(min-width: 1024px) 50vw, calc(100vw - 2rem)', loading: 'eager', fetchpriority: 'high', alt: product.featured_image.alt | default: product.title }}
       {% endif %}
     </div>
     {% if product.images.size > 1 %}
       <div class="thumbs">
         {% for image in product.images %}
-          <button type="button" data-thumb="{{ image | image_url: width: 1400 }}" class="{% if forloop.first %}is-active{% endif %}">
-            {{ image | image_url: width: 240 | image_tag: alt: image.alt }}
+          {%- assign src_400 = image | image_url: width: 400 -%}
+          {%- assign src_600 = image | image_url: width: 600 -%}
+          {%- assign src_900 = image | image_url: width: 900 -%}
+          {%- assign src_1200 = image | image_url: width: 1200 -%}
+          {%- assign src_1400 = image | image_url: width: 1400 -%}
+          <button
+            type="button"
+            class="{% if forloop.first %}is-active{% endif %}"
+            data-thumb
+            data-src="{{ src_1400 }}"
+            data-srcset="{{ src_400 }} 400w, {{ src_600 }} 600w, {{ src_900 }} 900w, {{ src_1200 }} 1200w, {{ src_1400 }} 1400w"
+          >
+            {{ image | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120, 180, 240', sizes: 'auto', alt: image.alt | default: product.title }}
           </button>
         {% endfor %}
       </div>
@@ -129,27 +140,32 @@
   </div>
 </div>
 
-{%- assign look_collection = collections['pjr-core'] -%}
-{%- if look_collection.products.size > 1 -%}
-  <section class="page-width look">
-    <h2 class="look__title">Complete the look</h2>
-    <div class="look__grid">
-      {%- assign shown = 0 -%}
-      {%- for p in look_collection.products -%}
-        {%- if p.id == product.id or p.available == false -%}{%- continue -%}{%- endif -%}
-        <a class="look__card" href="{{ p.url }}">
-          {%- if p.featured_image -%}
-            {{ p.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: p.title }}
-          {%- endif -%}
-          <span class="look__name">{{ p.title }}</span>
-          <span class="look__price">{{ p.price | money_without_trailing_zeros }}</span>
-        </a>
-        {%- assign shown = shown | plus: 1 -%}
-        {%- if shown >= 3 -%}{%- break -%}{%- endif -%}
-      {%- endfor -%}
-    </div>
-  </section>
+{%- assign look_collection = collections['new-in'] -%}
+{%- if look_collection.products_count == 0 -%}
+  {%- assign look_collection = collections.mens -%}
 {%- endif -%}
+{%- assign look_pool = look_collection.products | sort: 'created_at' | reverse -%}
+<section class="page-width look">
+  <h2 class="look__title">{{ 'product.complete' | t }}</h2>
+  <div class="look__grid">
+    {%- assign shown = 0 -%}
+    {%- for p in look_pool -%}
+      {%- if p.id == product.id -%}{%- continue -%}{%- endif -%}
+      {%- capture gate -%}{%- render 'product-gate', product: p, apparel_only: true -%}{%- endcapture -%}
+      {%- assign gate = gate | strip -%}
+      {%- if gate != blank -%}{%- continue -%}{%- endif -%}
+      <a class="look__card" href="{{ p.url }}">
+        {%- if p.featured_image -%}
+          {{ p.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '240, 480, 720', sizes: 'auto', alt: p.title }}
+        {%- endif -%}
+        <span class="look__name">{{ p.title }}</span>
+        <span class="look__price">{{ p.price | money_without_trailing_zeros }}</span>
+      </a>
+      {%- assign shown = shown | plus: 1 -%}
+      {%- if shown >= 3 -%}{%- break -%}{%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
 
 <script>
   document.querySelectorAll('[data-open-acc]').forEach(function (a) {
@@ -187,7 +203,46 @@
   .look__name { font-size: 13px; }
   .look__price { font-size: 13px; opacity: .8; }
   @media (max-width: 640px) { .look__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .sticky-atc { display: none; }
+  @media (max-width: 1023px) {
+    .sticky-atc {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 25;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
+      background: color-mix(in srgb, var(--color-bg) 94%, transparent);
+      border-top: 1px solid var(--color-border);
+      backdrop-filter: blur(8px);
+    }
+    .sticky-atc[hidden] { display: none !important; }
+    body.has-sticky-atc { padding-bottom: 5.25rem; }
+  }
+  .sticky-atc__copy { min-width: 0; flex: 1; }
+  .sticky-atc__name {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .sticky-atc__price { font-size: 0.8rem; color: var(--color-muted); }
+  .sticky-atc .btn { height: 2.75rem; padding: 0 1rem; flex-shrink: 0; }
 </style>
+
+<div class="sticky-atc" data-sticky-atc hidden>
+  <div class="sticky-atc__copy">
+    <p class="sticky-atc__name">{{ product.title }}</p>
+    <p class="sticky-atc__price" data-sticky-price>{{ current.price | money_without_trailing_zeros }}</p>
+  </div>
+  <button type="button" class="btn" data-sticky-add {% unless current.available %}disabled{% endunless %}>{{ 'product.add' | t }}</button>
+</div>
 
 {% schema %}
 {

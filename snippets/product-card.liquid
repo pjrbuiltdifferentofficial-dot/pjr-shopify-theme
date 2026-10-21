@@ -1,11 +1,14 @@
-{% comment %}
-  Renders a product card.
-  Accepts: product
-{% endcomment %}
+{% doc %}
+  Renders a product card. Skips any product whose handle or title contains bober or qrwa.
+  @param {product} product
+{% enddoc %}
+{%- capture pjr_gate -%}{%- render 'product-gate', product: product -%}{%- endcapture -%}
+{%- assign pjr_gate = pjr_gate | strip -%}
+{%- if pjr_gate == blank -%}
 <a href="{{ product.url }}" class="product-card">
   <div class="product-card__media">
     {% if product.featured_image %}
-      {{ product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: product.title }}
+      {{ product.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '200, 400, 600, 800', sizes: 'auto', alt: product.title }}
     {% endif %}
     {% if product.tags contains 'new' or product.tags contains 'Nowość' %}
       <span class="badge">New</span>
@@ -23,3 +26,4 @@
     </span>
   </div>
 </a>
+{%- endif -%}

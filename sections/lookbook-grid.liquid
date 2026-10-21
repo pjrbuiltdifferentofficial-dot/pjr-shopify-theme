@@ -14,7 +14,8 @@
     {% assign shots = 'lookbook-maroon.jpg,lookbook-fare-front.jpg,lookbook-fare-back.jpg,lookbook-polo.jpg,lookbook-noordinary.jpg,lookbook-woman-noordinary.jpg,lookbook-father.jpg,lookbook-oscar.jpg' | split: ',' %}
     {% assign labels = 'Maroon,Festival,Festival back,Polo,No Ordinary,No Ordinary,Father,Oscar' | split: ',' %}
     {% for fb in shots %}
-      <a href="{{ section.settings.link | default: routes.all_products_collection_url }}" class="look-cell">
+      {%- capture look_url -%}{%- render 'collection-url', handle: 'new-in', fallback: 'mens' -%}{%- endcapture -%}
+      <a href="{{ section.settings.link | default: look_url | strip }}" class="look-cell">
         <img src="{{ fb | asset_url }}" alt="{{ labels[forloop.index0] | escape }}" loading="lazy" width="900" height="1200">
       </a>
     {% endfor %}

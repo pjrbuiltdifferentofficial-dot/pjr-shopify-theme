@@ -8,7 +8,11 @@
     <div class="product-grid product-grid--3" style="margin-top:2.5rem;">
       {% for item in search.results %}
         {% if item.object_type == 'product' %}
-          {% render 'product-card', product: item %}
+          {% capture gate %}{% render 'product-gate', product: item %}{% endcapture %}
+          {% assign gate = gate | strip %}
+          {% if gate == blank %}
+            {% render 'product-card', product: item %}
+          {% endif %}
         {% endif %}
       {% else %}
         <p style="color:var(--color-muted);">—</p>

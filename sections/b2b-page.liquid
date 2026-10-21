@@ -1,0 +1,80 @@
+<article class="page-width section b2b-page">
+  <p class="kicker">{{ 'b2b.kicker' | t }}</p>
+  <h1>{{ 'b2b.heading' | t }}</h1>
+  <p class="section__sub">{{ 'b2b.intro' | t }}</p>
+  <p class="b2b-page__mail"><a href="mailto:pjrbuiltdifferentofficial@gmail.com">pjrbuiltdifferentofficial@gmail.com</a></p>
+
+  {% form 'contact', id: 'B2BInquiry', class: 'b2b-form form-grid' %}
+    {% if form.posted_successfully? %}
+      <p class="kicker">{{ 'b2b.success_kicker' | t }}</p>
+      <h2>{{ 'b2b.success_title' | t }}</h2>
+      <p>{{ 'b2b.success' | t }}</p>
+    {% else %}
+      {{ form.errors | default_errors }}
+      <input type="hidden" name="contact[tags]" value="B2B">
+      <label>
+        <span>{{ 'b2b.name' | t }}</span>
+        <input class="field" type="text" name="contact[name]" autocomplete="name" required>
+      </label>
+      <label>
+        <span>{{ 'b2b.email' | t }}</span>
+        <input class="field" type="email" name="contact[email]" autocomplete="email" required>
+      </label>
+      <label>
+        <span>{{ 'b2b.phone' | t }}</span>
+        <input class="field" type="tel" name="contact[phone]" autocomplete="tel">
+      </label>
+      <label>
+        <span>{{ 'b2b.company' | t }}</span>
+        <input class="field" type="text" name="contact[company]" autocomplete="organization" required>
+      </label>
+      <label>
+        <span>{{ 'b2b.type' | t }}</span>
+        <select class="field" name="contact[team_type]" required>
+          <option value="Restaurant">{{ 'b2b.type_restaurant' | t }}</option>
+          <option value="Gym">{{ 'b2b.type_gym' | t }}</option>
+          <option value="Company">{{ 'b2b.type_company' | t }}</option>
+          <option value="Other">{{ 'b2b.type_other' | t }}</option>
+        </select>
+      </label>
+      <label>
+        <span>{{ 'b2b.country' | t }}</span>
+        <input class="field" type="text" name="contact[country]" value="Norway" autocomplete="country-name">
+      </label>
+      <label>
+        <span>{{ 'b2b.pieces' | t }}</span>
+        <input class="field" type="text" name="contact[pieces]" placeholder="{{ 'b2b.pieces_placeholder' | t }}">
+      </label>
+      <label>
+        <span>{{ 'b2b.needed' | t }}</span>
+        <input class="field" type="text" name="contact[needed_by]" placeholder="{{ 'b2b.needed_placeholder' | t }}">
+      </label>
+      <label>
+        <span>{{ 'b2b.message' | t }}</span>
+        <textarea class="field b2b-form__area" name="contact[body]" rows="5" required placeholder="{{ 'b2b.message_placeholder' | t }}"></textarea>
+      </label>
+      <button class="btn" type="submit">{{ 'b2b.submit' | t }}</button>
+    {% endif %}
+  {% endform %}
+</article>
+
+{% stylesheet %}
+.b2b-page { max-width: 40rem; }
+.b2b-page h1 {
+  margin-top: 0.6rem;
+  font-size: var(--text-hero);
+  text-transform: uppercase;
+}
+.b2b-page__mail { margin-top: 1.25rem; }
+.b2b-page__mail a { text-decoration: underline; text-underline-offset: 3px; }
+.b2b-form { margin-top: 2rem; }
+.b2b-form__area { height: auto; padding: 0.85rem 1rem; resize: vertical; }
+.b2b-form .btn { justify-self: start; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "B2B inquiry",
+  "settings": []
+}
+{% endschema %}
