@@ -65,7 +65,17 @@
     "needed_placeholder": "Data albo bez terminu",
     "message": "Co mamy zrobić",
     "message_placeholder": "Co ma być nadrukowane albo haftowane",
-    "submit": "Wyślij brief"
+    "submit": "Wyślij brief",
+    "line_kicker": "Kitchen Line",
+    "line_title": "Kitchen Line — projekty koncepcyjne",
+    "line_caption": "Projekty koncepcyjne. Firmowe kurtki kucharskie i fartuchy dla twojej kuchni, szyte na zamówienie z twoim logo.",
+    "line_cta": "Wyślij zapytanie",
+    "line_classic": "Classic",
+    "line_fire": "Fire & Steel",
+    "line_nordic": "Nordic Chef",
+    "line_classic_alt": "Projekt koncepcyjny Classic. Czarna kurtka kucharska i fartuch ze złotym znakiem PJR.",
+    "line_fire_alt": "Projekt koncepcyjny Fire and Steel. Czarna kurtka kucharska z haftem płomienia i czarny fartuch.",
+    "line_nordic_alt": "Projekt koncepcyjny Nordic Chef. Biała kurtka kucharska i czarny fartuch z niebieskim znakiem PJR."
   },
   "collections": {
     "all": "Wszystko"

@@ -1,0 +1,31 @@
+{% doc %}
+  Kitchen Line concept photo from theme assets, WebP first with a JPG fallback.
+  Ships a full file and an 800px file. Neither is wider than 1600px.
+  @param {string} stem - Asset name without an extension, such as kitchen-line-classic
+  @param {string} alt - Accessible description
+  @param {number} width - Full image width in pixels
+  @param {number} height - Full image height in pixels
+  @param {string} [sizes] - sizes attribute. Defaults to auto for lazy images
+  @param {string} [loading] - lazy or eager. Defaults to lazy
+{% enddoc %}
+{%- liquid
+  assign load = loading | default: 'lazy'
+  assign size_attr = sizes | default: 'auto'
+  assign full_jpg = stem | append: '.jpg' | asset_url
+  assign small_jpg = stem | append: '-800.jpg' | asset_url
+  assign full_webp = stem | append: '.webp' | asset_url
+  assign small_webp = stem | append: '-800.webp' | asset_url
+-%}
+<picture>
+  <source type="image/webp" srcset="{{ small_webp }} 800w, {{ full_webp }} {{ width }}w" sizes="{{ size_attr }}">
+  <img
+    src="{{ full_jpg }}"
+    srcset="{{ small_jpg }} 800w, {{ full_jpg }} {{ width }}w"
+    sizes="{{ size_attr }}"
+    width="{{ width }}"
+    height="{{ height }}"
+    alt="{{ alt | escape }}"
+    loading="{{ load }}"
+    decoding="async"
+  >
+</picture>

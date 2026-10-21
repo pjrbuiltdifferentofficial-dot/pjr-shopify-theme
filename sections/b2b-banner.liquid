@@ -1,10 +1,21 @@
 {%- capture b2b_url -%}{%- if pages['b2b'] != blank -%}{{ pages['b2b'].url }}{%- else -%}/pages/b2b{%- endif -%}{%- endcapture -%}
 <section class="b2b-banner">
   <div class="page-width b2b-banner__inner">
-    <p class="kicker">{{ section.settings.kicker }}</p>
-    <h2>{{ section.settings.heading }}</h2>
-    <p>{{ section.settings.text }}</p>
-    <a class="btn" href="{{ b2b_url | strip }}">{{ section.settings.cta }}</a>
+    <a class="b2b-banner__photo" href="{{ b2b_url | strip }}#B2BInquiry">
+      {% render 'kitchen-line-image',
+        stem: 'kitchen-line-fire-steel',
+        alt: 'b2b.line_fire_alt' | t,
+        width: 1152,
+        height: 864
+      %}
+      <span class="b2b-banner__tag">{{ 'b2b.line_title' | t }}</span>
+    </a>
+    <div class="b2b-banner__copy">
+      <p class="kicker">{{ section.settings.kicker }}</p>
+      <h2>{{ section.settings.heading }}</h2>
+      <p>{{ section.settings.text }}</p>
+      <a class="btn" href="{{ b2b_url | strip }}#B2BInquiry">{{ section.settings.cta }}</a>
+    </div>
   </div>
 </section>
 
@@ -16,15 +27,50 @@
     var(--color-surface);
 }
 .b2b-banner__inner {
-  padding: 4.5rem 0;
-  max-width: 44rem;
+  display: grid;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 3rem 0 4rem;
+}
+@media (min-width: 900px) {
+  .b2b-banner__inner {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 3rem;
+  }
+}
+.b2b-banner__photo {
+  position: relative;
+  display: block;
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+}
+.b2b-banner__photo picture,
+.b2b-banner__photo img { display: block; width: 100%; }
+.b2b-banner__photo img {
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: transform 0.7s var(--ease-out);
+}
+.b2b-banner__photo:hover img { transform: scale(1.04); }
+.b2b-banner__tag {
+  position: absolute;
+  left: 0.85rem;
+  bottom: 0.85rem;
+  max-width: calc(100% - 1.7rem);
+  padding: 0.45rem 0.7rem;
+  background: color-mix(in srgb, var(--color-bg) 82%, transparent);
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 .b2b-banner h2 {
   margin-top: 0.75rem;
   font-size: var(--text-title);
   text-transform: uppercase;
 }
-.b2b-banner p { margin-top: 1rem; color: var(--color-muted); max-width: 36rem; }
+.b2b-banner__copy p:not(.kicker) { margin-top: 1rem; color: var(--color-muted); max-width: 36rem; }
 .b2b-banner .btn { margin-top: 1.75rem; }
 {% endstylesheet %}
 

@@ -65,7 +65,17 @@
     "needed_placeholder": "Date or no deadline",
     "message": "What should we make",
     "message_placeholder": "What you want printed or embroidered",
-    "submit": "Send the brief"
+    "submit": "Send the brief",
+    "line_kicker": "Kitchen Line",
+    "line_title": "Kitchen Line — concept designs",
+    "line_caption": "Concept designs. Custom chef jackets and aprons for your kitchen team, made to order with your logo.",
+    "line_cta": "Request a quote",
+    "line_classic": "Classic",
+    "line_fire": "Fire & Steel",
+    "line_nordic": "Nordic Chef",
+    "line_classic_alt": "Concept design, Classic. Black chef jacket and apron with a gold PJR mark.",
+    "line_fire_alt": "Concept design, Fire and Steel. Black chef jacket with flame embroidery and a black apron.",
+    "line_nordic_alt": "Concept design, Nordic Chef. White chef jacket and black apron with a blue PJR mark."
   },
   "collections": {
     "all": "All"
