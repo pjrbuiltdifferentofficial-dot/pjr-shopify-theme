@@ -1,0 +1,36 @@
+{% doc %}
+  Rounds a Printful measurement to one decimal.
+  A range such as 86.36–93.98 keeps both ends.
+  Non-numeric text is returned unchanged.
+  @param {string} value
+{% enddoc %}
+{%- liquid
+  assign raw = value | append: '' | strip
+  assign normalized = raw | replace: '–', '-' | replace: '—', '-' | replace: '−', '-'
+  assign parts = normalized | split: '-'
+  assign out = ''
+  for part in parts
+    assign piece = part | strip
+    if piece == blank
+      continue
+    endif
+    assign numeric = piece | plus: 0
+    assign zeroish = piece | replace: '0', '' | replace: '.', '' | replace: ',', '' | strip
+    if numeric == 0 and zeroish != blank
+      assign shown = piece
+    else
+      assign rounded = numeric | round: 1
+      assign whole = rounded | round
+      if rounded == whole
+        assign shown = whole
+      else
+        assign shown = rounded
+      endif
+    endif
+    if out != blank
+      assign out = out | append: '–'
+    endif
+    assign out = out | append: shown
+  endfor
+  echo out
+-%}

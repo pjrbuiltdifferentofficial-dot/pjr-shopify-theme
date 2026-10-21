@@ -1,0 +1,61 @@
+{% doc %}
+  Renders one size table and keeps only sizes this product sells.
+  If none of the chart sizes match the product, every row is shown.
+  @param {object} rows - Arrays of [size, measurement, ...]
+  @param {object} columns - Column objects with label and how_to_measure
+  @param {string} sold - Lowercase size names wrapped in pipes, or '|'
+  @param {string} caption
+{% enddoc %}
+{%- liquid
+  assign match_count = 0
+  if sold != '|'
+    for row in rows
+      assign size_name = row | first | append: '' | strip | downcase | replace: ' ', ''
+      assign token = '|' | append: size_name | append: '|'
+      if sold contains token
+        assign match_count = match_count | plus: 1
+      endif
+    endfor
+  endif
+  assign use_filter = false
+  if match_count > 0
+    assign use_filter = true
+  endif
+-%}
+{%- capture body -%}
+  {%- for row in rows -%}
+    {%- assign size_name = row | first | append: '' | strip -%}
+    {%- assign size_key = size_name | downcase | replace: ' ', '' -%}
+    {%- assign token = '|' | append: size_key | append: '|' -%}
+    {%- if use_filter -%}
+      {%- unless sold contains token -%}
+        {%- continue -%}
+      {%- endunless -%}
+    {%- endif -%}
+    <tr>
+      <th scope="row">{{ size_name | escape }}</th>
+      {%- for cell in row -%}
+        {%- unless forloop.first -%}
+          <td>{% render 'pjr-size-round', value: cell %}</td>
+        {%- endunless -%}
+      {%- endfor -%}
+    </tr>
+  {%- endfor -%}
+{%- endcapture -%}
+{%- assign body = body | strip -%}
+{%- if body != blank -%}
+  <div class="pjr-size__scroll">
+    <table>
+      <caption class="visually-hidden">{{ caption | escape }}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{{ 'size_chart.size' | t }}</th>
+          {%- for col in columns -%}
+            <th scope="col"{% if col.how_to_measure != blank %} title="{{ col.how_to_measure | escape }}"{% endif %}>{{ col.label | escape }}</th>
+          {%- endfor -%}
+        </tr>
+      </thead>
+      <tbody>{{ body }}</tbody>
+    </table>
+  </div>
+{%- endif -%}

@@ -27,6 +27,17 @@
     "from": "od",
     "complete": "Dopełnij look"
   },
+  "size_chart": {
+    "guide": "Tabela rozmiarów",
+    "fit": "Krój i rozmiar",
+    "cm": "cm",
+    "in": "cale",
+    "units": "Jednostki",
+    "size": "Rozmiar",
+    "how": "Jak mierzyć",
+    "diagram": "Schemat pomiarów",
+    "chef": "Szyte na zamówienie – napisz do nas w sprawie rozmiaru"
+  },
   "nav": {
     "shop": "Sklep",
     "new_in": "Nowości",

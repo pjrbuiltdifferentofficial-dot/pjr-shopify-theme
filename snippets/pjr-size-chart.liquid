@@ -1,0 +1,248 @@
+{% doc %}
+  Renders product.metafields.pjr.size_chart.
+  Centimetres are shown first. Inches are available when the chart includes them.
+  Letter columns (A, B, C, D) stay beside the measurement diagram.
+  @param {object} chart - Parsed pjr.size_chart JSON
+  @param {product} product - The product whose Size option filters the rows
+{% enddoc %}
+{%- liquid
+  assign sold = '|'
+  for option in product.options_with_values
+    assign option_name = option.name | downcase | strip
+    if option_name == 'size' or option_name == 'rozmiar'
+      for value in option.values
+        assign value_name = value.name | default: value | append: '' | strip | downcase | replace: ' ', ''
+        assign sold = sold | append: value_name | append: '|'
+      endfor
+    endif
+  endfor
+-%}
+{%- if chart.brand != blank or chart.model != blank -%}
+  <p class="pjr-size__blank">{{ chart.brand | escape }}{% if chart.model != blank %} {{ chart.model | escape }}{% endif %}</p>
+{%- endif -%}
+{%- for table in chart.tables -%}
+  {%- liquid
+    assign rows_cm = table.units['cm']
+    assign rows_in = table.units['in']
+    assign rows_none = table.units['none']
+    assign has_cm = false
+    assign has_in = false
+    assign has_none = false
+    if rows_cm != blank
+      assign has_cm = true
+    endif
+    if rows_in != blank
+      assign has_in = true
+    endif
+    if rows_none != blank
+      assign has_none = true
+    endif
+    assign show_head = false
+    if table.title != blank
+      assign show_head = true
+    endif
+    if has_cm and has_in
+      assign show_head = true
+    endif
+    assign lettered = true
+    if table.columns == blank
+      assign lettered = false
+    endif
+    for col in table.columns
+      assign lab = col.label | append: '' | strip | upcase
+      if lab.size != 1
+        assign lettered = false
+      endif
+    endfor
+    assign diagram_alt = 'size_chart.diagram' | t
+    if table.title != blank
+      assign diagram_alt = diagram_alt | append: '. ' | append: table.title
+    endif
+  -%}
+  {%- if has_cm or has_in or has_none -%}
+    <section class="pjr-size" data-pjr-size>
+      {%- if show_head -%}
+        <div class="pjr-size__head">
+          {%- if table.title != blank -%}
+            <h3 class="pjr-size__title">{{ table.title | escape }}</h3>
+          {%- endif -%}
+          {%- if has_cm and has_in -%}
+            <div class="pjr-size__units" role="group" aria-label="{{ 'size_chart.units' | t }}">
+              <button type="button" data-pjr-unit="cm" aria-pressed="true">{{ 'size_chart.cm' | t }}</button>
+              <button type="button" data-pjr-unit="in" aria-pressed="false">{{ 'size_chart.in' | t }}</button>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+      {%- if table.note != blank -%}
+        <p class="pjr-size__note">{{ table.note | escape }}</p>
+      {%- endif -%}
+      <div class="pjr-size__sheet{% if lettered and table.image_url != blank %} pjr-size__sheet--letters{% endif %}">
+        {%- if table.image_url != blank -%}
+          <img
+            class="pjr-size__diagram"
+            src="{{ table.image_url | escape }}"
+            alt="{{ diagram_alt | escape }}"
+            width="640"
+            height="640"
+            loading="lazy"
+          >
+        {%- endif -%}
+        <div>
+          {%- if has_cm -%}
+            <div data-pjr-panel="cm">
+              {% render 'pjr-size-table', rows: rows_cm, columns: table.columns, sold: sold, caption: table.title %}
+            </div>
+          {%- endif -%}
+          {%- if has_in -%}
+            <div data-pjr-panel="in"{% if has_cm %} hidden{% endif %}>
+              {% render 'pjr-size-table', rows: rows_in, columns: table.columns, sold: sold, caption: table.title %}
+            </div>
+          {%- endif -%}
+          {%- if has_none -%}
+            <div data-pjr-panel="none">
+              {% render 'pjr-size-table', rows: rows_none, columns: table.columns, sold: sold, caption: table.title %}
+            </div>
+          {%- endif -%}
+          {%- assign how_count = 0 -%}
+          {%- for col in table.columns -%}
+            {%- if col.how_to_measure != blank -%}
+              {%- assign how_count = how_count | plus: 1 -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if how_count > 0 -%}
+            <p class="pjr-size__how-label">{{ 'size_chart.how' | t }}</p>
+            <ul class="pjr-size__howto">
+              {%- for col in table.columns -%}
+                {%- if col.how_to_measure != blank -%}
+                  <li><span>{{ col.label | escape }}</span>{{ col.how_to_measure | escape }}</li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+      </div>
+    </section>
+  {%- endif -%}
+{%- endfor -%}
+
+{% stylesheet %}
+.pjr-size { margin-top: 1.25rem; }
+.pjr-size:first-child { margin-top: 0; }
+.pjr-size__blank {
+  margin: 0 0 0.75rem;
+  color: var(--color-muted);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.pjr-size__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.pjr-size__title {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.pjr-size__units {
+  display: inline-flex;
+  border: 1px solid var(--color-border);
+}
+.pjr-size__units button {
+  min-height: 2.25rem;
+  padding: 0.35rem 0.75rem;
+  color: var(--color-muted);
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.pjr-size__units button[aria-pressed="true"] {
+  background: var(--color-fg);
+  color: var(--color-bg);
+}
+.pjr-size__units button:focus-visible {
+  outline: 2px solid var(--color-fg);
+  outline-offset: 2px;
+}
+.pjr-size__note { margin: 0.45rem 0 0; color: var(--color-muted); font-size: 13px; }
+.pjr-size__sheet { display: grid; gap: 1rem; margin-top: 0.85rem; }
+@media (min-width: 800px) {
+  .pjr-size__sheet--letters { grid-template-columns: 12rem minmax(0, 1fr); align-items: start; }
+}
+.pjr-size__diagram {
+  width: 100%;
+  max-width: 16rem;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+  background: #fff;
+}
+.pjr-size__scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.pjr-size table {
+  width: 100%;
+  min-width: 18rem;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.pjr-size th,
+.pjr-size td {
+  border: 1px solid var(--color-border);
+  padding: 0.45rem 0.55rem;
+  text-align: center;
+  white-space: nowrap;
+}
+.pjr-size th { font-weight: 500; }
+.pjr-size th:first-child,
+.pjr-size td:first-child,
+.pjr-size tbody th {
+  position: sticky;
+  left: 0;
+  background: var(--color-bg);
+  text-align: left;
+}
+.pjr-size__how-label {
+  margin: 0.85rem 0 0;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.pjr-size__howto {
+  list-style: none;
+  margin: 0.35rem 0 0;
+  padding: 0;
+  color: var(--color-muted);
+  font-size: 12px;
+}
+.pjr-size__howto li { margin-top: 0.3rem; }
+.pjr-size__howto span {
+  margin-right: 0.4rem;
+  color: var(--color-fg);
+  font-family: var(--font-display);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+{% endstylesheet %}
+
+{% javascript %}
+document.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-pjr-unit]');
+  if (!button) return;
+  const root = button.closest('[data-pjr-size]');
+  if (!root) return;
+  const unit = button.dataset.pjrUnit;
+  root.querySelectorAll('[data-pjr-unit]').forEach((item) => {
+    item.setAttribute('aria-pressed', item === button ? 'true' : 'false');
+  });
+  root.querySelectorAll('[data-pjr-panel]').forEach((panel) => {
+    if (panel.dataset.pjrPanel === 'none') return;
+    panel.hidden = panel.dataset.pjrPanel !== unit;
+  });
+});
+{% endjavascript %}

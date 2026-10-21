@@ -27,6 +27,17 @@
     "from": "from",
     "complete": "Complete the look"
   },
+  "size_chart": {
+    "guide": "Size guide",
+    "fit": "Fit & sizing",
+    "cm": "cm",
+    "in": "in",
+    "units": "Units",
+    "size": "Size",
+    "how": "How to measure",
+    "diagram": "Measurement diagram",
+    "chef": "Made to order – contact us for sizing"
+  },
   "nav": {
     "shop": "Shop",
     "new_in": "New in",

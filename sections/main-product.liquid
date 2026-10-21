@@ -3,6 +3,25 @@
 {%- capture size_chart -%}{% render 'pf-specs', pf: pf, part: 'sizes' %}{%- endcapture -%}
 {%- capture fit_note -%}{% render 'pf-specs', pf: pf, part: 'fit' %}{%- endcapture -%}
 {%- capture pf_details -%}{% render 'pf-specs', pf: pf, part: 'details' %}{%- endcapture -%}
+{%- liquid
+  assign is_chef = false
+  if product.type == 'Chef Workwear'
+    assign is_chef = true
+  endif
+  assign pjr_chart = product.metafields.pjr.size_chart.value
+-%}
+{%- capture pjr_chart_html -%}
+  {%- if is_chef == false and pjr_chart != blank and pjr_chart.tables != blank -%}
+    {%- render 'pjr-size-chart', chart: pjr_chart, product: product -%}
+  {%- endif -%}
+{%- endcapture -%}
+{%- assign pjr_chart_html = pjr_chart_html | strip -%}
+{%- liquid
+  assign show_size_guide = false
+  if is_chef or pjr_chart_html != blank or size_chart != blank
+    assign show_size_guide = true
+  endif
+-%}
 <div class="page-width product">
   <div>
     <div class="product__stage">
@@ -64,8 +83,8 @@
         </div>
       {% endfor %}
 
-      {%- if size_chart != blank -%}
-        <a href="#fit-sizing" class="size-guide-link" data-open-acc="fit-sizing">Size guide</a>
+      {%- if show_size_guide -%}
+        <a href="#fit-sizing" class="size-guide-link" data-open-acc="fit-sizing">{{ 'size_chart.guide' | t }}</a>
       {%- endif -%}
 
       <button
@@ -96,15 +115,22 @@
     {%- endif -%}
 
     <div class="product-acc">
-      {%- if size_chart != blank or fit_note != blank -%}
+      {%- if is_chef or pjr_chart_html != blank or size_chart != blank or fit_note != blank -%}
         <details class="acc" id="fit-sizing">
-          <summary>Fit &amp; sizing</summary>
+          <summary>{{ 'size_chart.fit' | t }}</summary>
           <div class="acc__body">
-            {%- if fit_note != blank -%}<p class="acc__lead">{{ fit_note }}.</p>{%- endif -%}
-            {%- if size_chart != blank -%}
-              <p>Between sizes? Take your normal size for a relaxed fit, size up for a roomier look.</p>
-              {{ size_chart }}
-              <p class="acc__note">Garment measurements in cm, laid flat. Measurements may vary by up to 5 cm.</p>
+            {%- if is_chef -%}
+              {%- capture b2b_url -%}{%- if pages['b2b'] != blank -%}{{ pages['b2b'].url }}{%- else -%}/pages/b2b{%- endif -%}{%- endcapture -%}
+              <p><a class="size-guide-link" href="{{ b2b_url | strip }}">{{ 'size_chart.chef' | t }}</a></p>
+            {%- else -%}
+              {%- if fit_note != blank -%}<p class="acc__lead">{{ fit_note }}.</p>{%- endif -%}
+              {%- if pjr_chart_html != blank -%}
+                {{ pjr_chart_html }}
+              {%- elsif size_chart != blank -%}
+                <p>Between sizes? Take your normal size for a relaxed fit, size up for a roomier look.</p>
+                {{ size_chart }}
+                <p class="acc__note">Garment measurements in cm, laid flat. Measurements may vary by up to 5 cm.</p>
+              {%- endif -%}
             {%- endif -%}
           </div>
         </details>
