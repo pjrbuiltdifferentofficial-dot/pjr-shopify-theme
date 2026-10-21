@@ -73,9 +73,9 @@
     "line_classic": "Classic",
     "line_fire": "Fire & Steel",
     "line_nordic": "Nordic Chef",
-    "line_classic_alt": "Concept design, Classic. Black chef jacket and apron with a gold PJR mark.",
-    "line_fire_alt": "Concept design, Fire and Steel. Black chef jacket with flame embroidery and a black apron.",
-    "line_nordic_alt": "Concept design, Nordic Chef. White chef jacket and black apron with a blue PJR mark."
+    "line_classic_alt": "Concept design, Classic. Black double-breasted chef jacket with red piping, silver PJR embroidery and black apron with red PJR patch.",
+    "line_fire_alt": "Concept design, Fire and Steel. Charcoal canvas chef jacket with burnt-orange piping and crossed-knives embroidery, charcoal apron with leather straps.",
+    "line_nordic_alt": "Concept design, Nordic Chef. Ivory chef jacket with navy collar and cuffs, fjord and knife embroidery, navy waist apron."
   },
   "collections": {
     "all": "All"
