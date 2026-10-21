@@ -2,9 +2,10 @@
 <section class="b2b-banner">
   <div class="page-width b2b-banner__inner">
     <a class="b2b-banner__photo" href="{{ b2b_url | strip }}#B2BInquiry">
+      {%- assign fire_alt = 'b2b.line_fire_alt' | t -%}
       {% render 'kitchen-line-image',
         stem: 'kitchen-line-fire-steel',
-        alt: 'b2b.line_fire_alt' | t,
+        alt: fire_alt,
         width: 1152,
         height: 864
       %}

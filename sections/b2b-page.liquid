@@ -10,10 +10,13 @@
     <p class="kicker">{{ 'b2b.line_kicker' | t }}</p>
     <h2 id="kitchen-line-title">{{ 'b2b.line_title' | t }}</h2>
     <div class="kitchen-line__grid">
+      {%- assign classic_alt = 'b2b.line_classic_alt' | t -%}
+      {%- assign fire_alt = 'b2b.line_fire_alt' | t -%}
+      {%- assign nordic_alt = 'b2b.line_nordic_alt' | t -%}
       <figure class="kitchen-line__card">
         {% render 'kitchen-line-image',
           stem: 'kitchen-line-classic',
-          alt: 'b2b.line_classic_alt' | t,
+          alt: classic_alt,
           width: 1500,
           height: 844,
           loading: 'eager',
@@ -24,7 +27,7 @@
       <figure class="kitchen-line__card">
         {% render 'kitchen-line-image',
           stem: 'kitchen-line-fire-steel',
-          alt: 'b2b.line_fire_alt' | t,
+          alt: fire_alt,
           width: 1152,
           height: 864
         %}
@@ -33,7 +36,7 @@
       <figure class="kitchen-line__card">
         {% render 'kitchen-line-image',
           stem: 'kitchen-line-nordic-chef',
-          alt: 'b2b.line_nordic_alt' | t,
+          alt: nordic_alt,
           width: 1152,
           height: 864
         %}
