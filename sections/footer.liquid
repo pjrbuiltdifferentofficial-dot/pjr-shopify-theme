@@ -27,7 +27,8 @@
           <p class="newsletter__success">{{ 'newsletter.success' | t }}</p>
         {%- else -%}
           <input type="hidden" name="contact[tags]" value="newsletter,footer">
-          <input class="field" type="email" name="contact[email]" placeholder="{{ section.settings.placeholder }}" autocomplete="email" required>
+          <label class="visually-hidden" for="FooterEmail">{{ section.settings.placeholder }}</label>
+          <input id="FooterEmail" class="field" type="email" name="contact[email]" placeholder="{{ section.settings.placeholder }}" autocomplete="email" required aria-label="{{ section.settings.placeholder | escape }}">
           <button class="btn" type="submit">{{ section.settings.cta }}</button>
         {%- endif -%}
       {% endform %}

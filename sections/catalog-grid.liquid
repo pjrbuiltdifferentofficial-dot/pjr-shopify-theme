@@ -5,7 +5,10 @@
   assign apparel_only = section.settings.apparel_only
   assign using_collection = false
   assign has_pool = false
-  if col.products_count > 0
+  assign manual_handles = section.settings.product_handles | split: ','
+  if section.settings.product_handles != blank
+    assign has_pool = true
+  elsif col.products_count > 0
     assign pool = col.products
     assign using_collection = true
     assign has_pool = true
@@ -13,7 +16,7 @@
     assign pool = collections.mens.products | concat: collections.womens.products
     assign has_pool = true
   endif
-  if has_pool and section.settings.newest_first
+  if has_pool and section.settings.product_handles == blank and section.settings.newest_first
     assign pool = pool | sort: 'created_at' | reverse
   endif
 -%}
@@ -27,13 +30,31 @@
           {% if section.settings.sub != blank %}<p class="section__sub">{{ section.settings.sub }}</p>{% endif %}
         </div>
         {% if section.settings.cta != blank %}
-          {%- capture cta_url -%}{%- render 'collection-url', handle: handle, fallback: section.settings.fallback_handle -%}{%- endcapture -%}
+          {%- if section.settings.cta_link != blank -%}
+            {%- assign cta_url = section.settings.cta_link -%}
+          {%- else -%}
+            {%- capture cta_url -%}{%- render 'collection-url', handle: handle, fallback: section.settings.fallback_handle -%}{%- endcapture -%}
+          {%- endif -%}
           <a class="btn btn--line" href="{{ cta_url | strip }}">{{ section.settings.cta }}</a>
         {% endif %}
       </div>
       <div class="product-grid product-grid--4">
         {%- assign shown = 0 -%}
         {%- assign seen = '|' -%}
+        {%- if section.settings.product_handles != blank -%}
+          {%- for raw_handle in manual_handles -%}
+            {%- if shown >= limit -%}{% break %}{%- endif -%}
+            {%- assign handle_key = raw_handle | strip -%}
+            {%- assign picked = all_products[handle_key] -%}
+            {%- if picked == blank -%}{% continue %}{%- endif -%}
+            {%- capture gate -%}{%- render 'product-gate', product: picked, apparel_only: apparel_only -%}{%- endcapture -%}
+            {%- assign gate = gate | strip -%}
+            {%- if gate != blank -%}{% continue %}{%- endif -%}
+            {% render 'product-card', product: picked %}
+            {%- assign shown = shown | plus: 1 -%}
+          {%- endfor -%}
+        {%- endif -%}
+        {%- if section.settings.product_handles == blank -%}
         {%- for product in pool -%}
           {%- if shown >= limit -%}{% break %}{%- endif -%}
           {%- assign mark = '|' | append: product.id | append: '|' -%}
@@ -60,6 +81,7 @@
             {%- assign shown = shown | plus: 1 -%}
           {%- endfor -%}
         {%- endif -%}
+        {%- endif -%}
       </div>
     </div>
   </section>
@@ -78,7 +100,9 @@
     { "type": "checkbox", "id": "apparel_only", "label": "Clothes only (hide mugs, aprons, socks)", "default": true },
     { "type": "checkbox", "id": "newest_first", "label": "Sort newest first", "default": true },
     { "type": "range", "id": "limit", "label": "Products", "min": 4, "max": 8, "step": 1, "default": 8 },
-    { "type": "text", "id": "cta", "label": "Link label", "default": "Shop new in" }
+    { "type": "text", "id": "cta", "label": "Link label", "default": "Shop new in" },
+    { "type": "text", "id": "cta_link", "label": "Link URL", "info": "Optional. Overrides the collection link. Use a path such as /search?q=swim." },
+    { "type": "text", "id": "product_handles", "label": "Product handles", "info": "Optional comma-separated handles. When set, these products are shown instead of the collection." }
   ],
   "presets": [{ "name": "Catalog grid" }]
 }

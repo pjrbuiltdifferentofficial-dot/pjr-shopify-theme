@@ -27,6 +27,21 @@
         "cta": "Shop new in"
       }
     },
+    "kitchen": {
+      "type": "catalog-grid",
+      "settings": {
+        "kicker": "Kitchen Line",
+        "heading": "Kitchen Line",
+        "sub": "Chef sets built for the pass: jacket, pants and apron. Made to order.",
+        "collection_handle": "kitchen-line",
+        "fallback_handle": "kitchen-line",
+        "fallback_pool": false,
+        "apparel_only": false,
+        "newest_first": false,
+        "limit": 8,
+        "cta": "Shop Kitchen Line"
+      }
+    },
     "cats": {
       "type": "category-tiles",
       "blocks": {
@@ -41,6 +56,22 @@
       "settings": {
         "kicker": "Catalog",
         "heading": "Shop by cut"
+      }
+    },
+    "swim": {
+      "type": "catalog-grid",
+      "settings": {
+        "kicker": "Swimwear",
+        "heading": "Swimwear",
+        "sub": "All-over print swimsuits, bikini and board shorts.",
+        "collection_handle": "womens",
+        "product_handles": "one-piece-swimsuit,all-over-print-recycled-string-bikini-top,mens-board-shorts,one-piece-swimsuit-1",
+        "fallback_pool": false,
+        "apparel_only": false,
+        "newest_first": false,
+        "limit": 4,
+        "cta": "Shop swimwear",
+        "cta_link": "/search?type=product&options[prefix]=last&q=swim"
       }
     },
     "xmas": {
@@ -68,5 +99,5 @@
       }
     }
   },
-  "order": ["hero", "newin", "cats", "xmas", "b2b"]
+  "order": ["hero", "newin", "kitchen", "cats", "swim", "xmas", "b2b"]
 }

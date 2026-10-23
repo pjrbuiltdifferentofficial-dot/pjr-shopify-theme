@@ -1,0 +1,26 @@
+{% doc %}
+  Norway shipping note for the cart. Flat 119 kr, free from 1 500 kr.
+  Renders only while the cart currency is NOK.
+  @param {number} total - Cart total in the currency's subunit (cents)
+{% enddoc %}
+{%- if cart.currency.iso_code == 'NOK' -%}
+  {%- assign ship_threshold = 150000 -%}
+  {%- assign ship_remaining = ship_threshold | minus: total -%}
+  <p
+    class="cart-ship"
+    data-cart-ship
+    data-threshold="{{ ship_threshold }}"
+    data-free="{{ 'cart.ship_free' | t | escape }}"
+    data-progress="{{ 'cart.ship_progress_js' | t | escape }}"
+  >
+    <span class="cart-ship__rate">{{ 'cart.ship_rate' | t }}</span>
+    <span data-ship-progress>
+      {%- if total >= ship_threshold -%}
+        {{ 'cart.ship_free' | t }}
+      {%- else -%}
+        {%- assign ship_remaining_money = ship_remaining | money_without_trailing_zeros -%}
+        {{ 'cart.ship_progress' | t: amount: ship_remaining_money }}
+      {%- endif -%}
+    </span>
+  </p>
+{%- endif -%}

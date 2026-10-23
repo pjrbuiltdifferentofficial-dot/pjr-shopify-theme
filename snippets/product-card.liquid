@@ -1,6 +1,7 @@
 {% doc %}
   Renders a product card. Skips any product whose handle or title contains bober or qrwa.
   @param {product} product
+  @param {boolean} [eager] - Load this image immediately. Use for the first card on a collection page, where it is the LCP.
 {% enddoc %}
 {%- capture pjr_gate -%}{%- render 'product-gate', product: product -%}{%- endcapture -%}
 {%- assign pjr_gate = pjr_gate | strip -%}
@@ -8,7 +9,11 @@
 <a href="{{ product.url }}" class="product-card">
   <div class="product-card__media">
     {% if product.featured_image %}
-      {{ product.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '200, 400, 600, 800', sizes: 'auto', alt: product.title }}
+      {%- if eager -%}
+        {{ product.featured_image | image_url: width: 800, format: 'jpg' | image_tag: loading: 'eager', fetchpriority: 'high', widths: '200, 400, 600, 800', sizes: '(min-width: 1024px) 25vw, (min-width: 640px) 50vw, calc(100vw - 2rem)', alt: '' }}
+      {%- else -%}
+        {{ product.featured_image | image_url: width: 800, format: 'jpg' | image_tag: loading: 'lazy', widths: '200, 400, 600, 800', sizes: '(min-width: 1024px) 25vw, (min-width: 640px) 50vw, calc(100vw - 2rem)', alt: '' }}
+      {%- endif -%}
     {% endif %}
     {% if product.tags contains 'new' or product.tags contains 'Nowość' %}
       <span class="badge">New</span>
@@ -16,7 +21,7 @@
   </div>
   <div class="product-card__meta">
     <div>
-      <h3>{{ product.title }}</h3>
+      <p class="product-card__name">{{ product.title }}</p>
       {% if product.metafields.descriptors.subtitle != blank %}
         <p class="product-card__sub">{{ product.metafields.descriptors.subtitle }}</p>
       {% endif %}

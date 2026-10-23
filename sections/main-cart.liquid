@@ -24,8 +24,9 @@
         <p class="kicker">{{ 'cart.title' | t }}</p>
         <div class="cart-row" style="margin-top:1rem;">
           <span>{{ 'cart.subtotal' | t }}</span>
-          <span>{{ cart.total_price | money_without_trailing_zeros }}</span>
+          <span data-cart-subtotal>{{ cart.total_price | money_without_trailing_zeros }}</span>
         </div>
+        {% render 'shipping-note', total: cart.total_price %}
         <form action="{{ routes.cart_url }}" method="post">
           <button class="btn btn--full" type="submit" name="checkout" style="margin-top:1.5rem;">{{ 'cart.checkout' | t }}</button>
         </form>

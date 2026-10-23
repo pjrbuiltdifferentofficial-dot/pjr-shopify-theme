@@ -1,8 +1,9 @@
 <div class="drawer-backdrop" data-cart-backdrop></div>
-<aside class="cart-drawer" id="CartDrawer" aria-hidden="true">
+<span hidden data-qty-labels data-decrease="{{ 'cart.decrease' | t | escape }}" data-increase="{{ 'cart.increase' | t | escape }}"></span>
+<aside class="cart-drawer" id="CartDrawer" role="dialog" aria-modal="true" aria-hidden="true" inert aria-labelledby="CartDrawerTitle">
   <header class="cart-drawer__head">
     <div>
-      <h2>{{ 'cart.title' | t }}</h2>
+      <h2 id="CartDrawerTitle">{{ 'cart.title' | t }}</h2>
       <p class="kicker" style="margin:0.2rem 0 0;"><span data-cart-count>{{ cart.item_count }}</span> {{ 'cart.pieces' | t }}</p>
     </div>
     <button type="button" class="site-header__icon" data-close-cart aria-label="{{ 'general.close' | t }}">
@@ -25,9 +26,9 @@
             <div class="cart-line__title">{{ item.product_title }}</div>
             <div class="cart-line__meta">{{ item.variant_title }}</div>
             <div class="qty">
-              <button type="button" data-qty="-1" aria-label="-">−</button>
+              <button type="button" data-qty="-1" aria-label="{{ 'cart.decrease' | t }}">−</button>
               <span>{{ item.quantity }}</span>
-              <button type="button" data-qty="1" aria-label="+">+</button>
+              <button type="button" data-qty="1" aria-label="{{ 'cart.increase' | t }}">+</button>
             </div>
           </div>
           <div>{{ item.final_line_price | money_without_trailing_zeros }}</div>
@@ -40,6 +41,7 @@
       <span>{{ 'cart.subtotal' | t }}</span>
       <span data-cart-subtotal>{{ cart.total_price | money_without_trailing_zeros }}</span>
     </div>
+    {% render 'shipping-note', total: cart.total_price %}
     <a class="btn btn--full" href="/checkout" style="margin-top:1.25rem;">{{ 'cart.checkout' | t }}</a>
     <button type="button" class="btn btn--line btn--full" data-close-cart style="margin-top:0.75rem;">{{ 'cart.continue' | t }}</button>
   </footer>

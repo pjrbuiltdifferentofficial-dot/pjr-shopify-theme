@@ -1,8 +1,8 @@
 <section class="hero">
   {% if section.settings.image != blank %}
-    {{ section.settings.image | image_url: width: 2000 | image_tag: class: 'hero__img', alt: section.settings.heading, widths: '600, 900, 1200, 1600, 2000', sizes: '100vw', fetchpriority: 'high', loading: 'eager' }}
+    {{ section.settings.image | image_url: width: 2000 | image_tag: class: 'hero__img', alt: '', widths: '600, 900, 1200, 1600, 2000', sizes: '100vw', fetchpriority: 'high', loading: 'eager' }}
   {% else %}
-    <img class="hero__img" src="{{ 'hero-kitchen.jpg' | asset_url }}" alt="{{ section.settings.heading | escape }}" fetchpriority="high" width="2400" height="1350">
+    <img class="hero__img" src="{{ 'hero-kitchen.jpg' | asset_url }}" alt="" fetchpriority="high" width="2400" height="1350">
   {% endif %}
   <div class="hero__shade"></div>
   <div class="page-width hero__content">

@@ -16,7 +16,13 @@
     "continue": "Keep shopping",
     "pieces": "pieces",
     "added": "In the bag",
-    "need_size": "Select a size"
+    "need_size": "Select a size",
+    "decrease": "Decrease quantity",
+    "increase": "Increase quantity",
+    "ship_rate": "Shipping in Norway is 119 kr. Free from 1 500 kr.",
+    "ship_free": "Free shipping in Norway.",
+    "ship_progress": "Add {{ amount }} for free shipping in Norway.",
+    "ship_progress_js": "Add __AMOUNT__ for free shipping in Norway."
   },
   "product": {
     "add": "Add to bag",
@@ -25,7 +31,8 @@
     "details": "Spec",
     "related": "Worn together",
     "from": "from",
-    "complete": "Complete the look"
+    "complete": "Complete the look",
+    "ship_no": "Norway: 119 kr shipping, free from 1 500 kr"
   },
   "size_chart": {
     "guide": "Size guide",
@@ -89,7 +96,8 @@
     "line_nordic_alt": "Concept design, Nordic Chef. Ivory chef jacket with navy collar and cuffs, fjord and knife embroidery, navy waist apron."
   },
   "collections": {
-    "all": "All"
+    "all": "All",
+    "empty": "Nothing in this collection yet."
   },
   "newsletter": {
     "success": "You're on the list."

@@ -15,6 +15,6 @@ If the store already uses another theme (Dawn etc.), this repo will NOT change p
 2. Pages → Lookbook → template `lookbook`
 3. Collections → make `mens` (or `pjr-core`) the heavyweight adults only. Keep kids out of it.
 4. Navigation: Shop, Norway, Lookbook, Story, Contact. Kids not in the top bar.
-5. Discount `KITCHEN10` if you want the announcement bar to be real.
+5. The announcement bar states Norway shipping: 119 kr, free from 1 500 kr. Do not put a discount code there.
 
 Homepage capsule reads collection `mens` and skips baby / onesie / vroom titles.

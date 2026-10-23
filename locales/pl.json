@@ -16,7 +16,13 @@
     "continue": "Kontynuuj zakupy",
     "pieces": "sztuk",
     "added": "W koszyku",
-    "need_size": "Wybierz rozmiar"
+    "need_size": "Wybierz rozmiar",
+    "decrease": "Zmniejsz ilość",
+    "increase": "Zwiększ ilość",
+    "ship_rate": "Wysyłka do Norwegii: 119 kr. Za darmo od 1 500 kr.",
+    "ship_free": "Darmowa wysyłka do Norwegii.",
+    "ship_progress": "Dodaj {{ amount }}, aby mieć darmową wysyłkę do Norwegii.",
+    "ship_progress_js": "Dodaj __AMOUNT__, aby mieć darmową wysyłkę do Norwegii."
   },
   "product": {
     "add": "Do koszyka",
@@ -25,7 +31,8 @@
     "details": "Specyfikacja",
     "related": "Noszone razem",
     "from": "od",
-    "complete": "Dopełnij look"
+    "complete": "Dopełnij look",
+    "ship_no": "Norwegia: wysyłka 119 kr, za darmo od 1 500 kr"
   },
   "size_chart": {
     "guide": "Tabela rozmiarów",
@@ -89,7 +96,8 @@
     "line_nordic_alt": "Projekt koncepcyjny Nordic Chef. Biała kurtka kucharska i czarny fartuch z niebieskim znakiem PJR."
   },
   "collections": {
-    "all": "Wszystko"
+    "all": "Wszystko",
+    "empty": "W tej kolekcji jeszcze nic nie ma."
   },
   "newsletter": {
     "success": "Jesteś na liście."

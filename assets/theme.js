@@ -25,21 +25,45 @@
 
   const menu = $(".nav-drawer");
   const menuBack = $("[data-menu-backdrop]");
+  const menuToggle = $("[data-open-menu]");
+  let menuReturn = null;
   const openMenu = (on) => {
     menu?.classList.toggle("is-open", on);
     menuBack?.classList.toggle("is-open", on);
+    menu?.setAttribute("aria-hidden", on ? "false" : "true");
+    if (on) menu?.removeAttribute("inert");
+    else menu?.setAttribute("inert", "");
+    menuToggle?.setAttribute("aria-expanded", on ? "true" : "false");
     lock(on || $(".cart-drawer")?.classList.contains("is-open"));
+    if (on) {
+      menuReturn = document.activeElement;
+      menu?.querySelector("[data-close-menu]")?.focus();
+    } else if (menuReturn && typeof menuReturn.focus === "function") {
+      menuReturn.focus();
+      menuReturn = null;
+    }
   };
-  $("[data-open-menu]")?.addEventListener("click", () => openMenu(true));
+  menuToggle?.addEventListener("click", () => openMenu(true));
   $("[data-close-menu]")?.addEventListener("click", () => openMenu(false));
   menuBack?.addEventListener("click", () => openMenu(false));
 
   const drawer = $(".cart-drawer");
   const cartBack = $("[data-cart-backdrop]");
+  let cartReturn = null;
   const openCart = (on) => {
     drawer?.classList.toggle("is-open", on);
     cartBack?.classList.toggle("is-open", on);
+    drawer?.setAttribute("aria-hidden", on ? "false" : "true");
+    if (on) drawer?.removeAttribute("inert");
+    else drawer?.setAttribute("inert", "");
     lock(on);
+    if (on) {
+      cartReturn = document.activeElement;
+      drawer?.querySelector("[data-close-cart]")?.focus();
+    } else if (cartReturn && typeof cartReturn.focus === "function") {
+      cartReturn.focus();
+      cartReturn = null;
+    }
   };
   document.addEventListener("click", (e) => {
     if (e.target.closest("[data-open-cart]")) {
@@ -50,16 +74,51 @@
   });
   cartBack?.addEventListener("click", () => openCart(false));
 
+  const esc = (value) =>
+    String(value ?? "").replace(/[&<>"']/g, (char) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char])
+    );
+
   const money = (cents) => {
+    const currency = window.Shopify?.currency?.active || "NOK";
+    const value = cents / 100;
+    if (currency === "NOK") {
+      const formatted = Number.isInteger(value)
+        ? new Intl.NumberFormat("nb-NO", { maximumFractionDigits: 0 }).format(value)
+        : new Intl.NumberFormat("nb-NO", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
+      return `${formatted} kr`;
+    }
     try {
       return new Intl.NumberFormat(document.documentElement.lang || "en", {
         style: "currency",
-        currency: window.Shopify?.currency?.active || "NOK",
-      }).format(cents / 100);
+        currency,
+      }).format(value);
     } catch {
-      return (cents / 100).toFixed(2);
+      return value.toFixed(2);
     }
   };
+
+  const updateShipping = (cart) => {
+    const note = $("[data-cart-ship]");
+    if (!note) return;
+    const currency = cart?.currency || window.Shopify?.currency?.active;
+    if (currency && currency !== "NOK") {
+      note.hidden = true;
+      return;
+    }
+    note.hidden = false;
+    const progress = note.querySelector("[data-ship-progress]");
+    if (!progress) return;
+    const threshold = Number(note.dataset.threshold) || 150000;
+    const remaining = threshold - (cart?.total_price || 0);
+    progress.textContent = remaining <= 0
+      ? note.dataset.free || ""
+      : (note.dataset.progress || "").replace("__AMOUNT__", money(remaining));
+  };
+
+  const qtyLabels = document.querySelector("[data-qty-labels]");
+  const decLabel = qtyLabels?.dataset.decrease || "Decrease quantity";
+  const incLabel = qtyLabels?.dataset.increase || "Increase quantity";
 
   const renderCart = (cart) => {
     $$("[data-cart-count]").forEach((el) => {
@@ -82,14 +141,14 @@
       .map(
         (item) => `
       <div class="cart-line" data-key="${item.key}">
-        <a href="${item.url}"><img src="${item.image || ""}" alt="" width="80" height="112"></a>
+        <a href="${esc(item.url)}"><img src="${esc(item.image || "")}" alt="${esc(item.product_title)}" width="80" height="112"></a>
         <div>
-          <div class="cart-line__title">${item.product_title}</div>
-          <div class="cart-line__meta">${item.variant_title || ""}</div>
+          <div class="cart-line__title">${esc(item.product_title)}</div>
+          <div class="cart-line__meta">${esc(item.variant_title || "")}</div>
           <div class="qty">
-            <button type="button" data-qty="-1" aria-label="-">−</button>
+            <button type="button" data-qty="-1" aria-label="${esc(decLabel)}">−</button>
             <span>${item.quantity}</span>
-            <button type="button" data-qty="1" aria-label="+">+</button>
+            <button type="button" data-qty="1" aria-label="${esc(incLabel)}">+</button>
           </div>
         </div>
         <div>${money(item.final_line_price)}</div>
@@ -98,6 +157,7 @@
       .join("");
     const sub = $("[data-cart-subtotal]");
     if (sub) sub.textContent = money(cart.total_price);
+    updateShipping(cart);
   };
 
   const refreshCart = () =>
@@ -144,8 +204,12 @@
     $$("[data-option] button").forEach((btn) => {
       btn.addEventListener("click", () => {
         const group = btn.closest("[data-option]");
-        $$("button", group).forEach((b) => b.classList.remove("is-active"));
+        $$("button", group).forEach((b) => {
+          b.classList.remove("is-active");
+          b.setAttribute("aria-pressed", "false");
+        });
         btn.classList.add("is-active");
+        btn.setAttribute("aria-pressed", "true");
         const variant = findVariant();
         if (variant && select) {
           select.value = variant.id;
@@ -237,7 +301,10 @@
     toggle.setAttribute("aria-expanded", open ? "true" : "false");
   });
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeNavDrops();
+    if (e.key !== "Escape") return;
+    closeNavDrops();
+    if (drawer?.classList.contains("is-open")) openCart(false);
+    else if (menu?.classList.contains("is-open")) openMenu(false);
   });
 
   $$("[data-tab]").forEach((btn) => {

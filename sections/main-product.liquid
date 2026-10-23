@@ -26,25 +26,26 @@
   <div>
     <div class="product__stage">
       {% if product.featured_image %}
-        {{ product.featured_image | image_url: width: 1400 | image_tag: class: 'product__photo', widths: '400, 600, 900, 1200, 1400', sizes: '(min-width: 1024px) 50vw, calc(100vw - 2rem)', loading: 'eager', fetchpriority: 'high', alt: product.featured_image.alt | default: product.title }}
+        {{ product.featured_image | image_url: width: 1400, format: 'jpg' | image_tag: class: 'product__photo', widths: '400, 600, 900, 1200, 1400', sizes: '(min-width: 1024px) 50vw, calc(100vw - 2rem)', loading: 'eager', fetchpriority: 'high', alt: product.featured_image.alt | default: product.title }}
       {% endif %}
     </div>
     {% if product.images.size > 1 %}
       <div class="thumbs">
         {% for image in product.images %}
-          {%- assign src_400 = image | image_url: width: 400 -%}
-          {%- assign src_600 = image | image_url: width: 600 -%}
-          {%- assign src_900 = image | image_url: width: 900 -%}
-          {%- assign src_1200 = image | image_url: width: 1200 -%}
-          {%- assign src_1400 = image | image_url: width: 1400 -%}
+          {%- assign src_400 = image | image_url: width: 400, format: 'jpg' -%}
+          {%- assign src_600 = image | image_url: width: 600, format: 'jpg' -%}
+          {%- assign src_900 = image | image_url: width: 900, format: 'jpg' -%}
+          {%- assign src_1200 = image | image_url: width: 1200, format: 'jpg' -%}
+          {%- assign src_1400 = image | image_url: width: 1400, format: 'jpg' -%}
           <button
             type="button"
             class="{% if forloop.first %}is-active{% endif %}"
             data-thumb
             data-src="{{ src_1400 }}"
             data-srcset="{{ src_400 }} 400w, {{ src_600 }} 600w, {{ src_900 }} 900w, {{ src_1200 }} 1200w, {{ src_1400 }} 1400w"
+            aria-label="{{ image.alt | default: product.title | escape }}"
           >
-            {{ image | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120, 180, 240', sizes: 'auto', alt: image.alt | default: product.title }}
+            {{ image | image_url: width: 240, format: 'jpg' | image_tag: loading: 'lazy', widths: '120, 180, 240', sizes: '72px', alt: '' }}
           </button>
         {% endfor %}
       </div>
@@ -62,7 +63,7 @@
     {% assign added_label = 'cart.added' | t %}
     {% assign need_size = 'cart.need_size' | t %}
     {% form 'product', product, data-product-form: '', data-added: added_label, data-need-size: need_size %}
-      <select name="id" class="visually-hidden" aria-hidden="true">
+      <select name="id" class="visually-hidden" tabindex="-1" aria-label="{{ product.title | escape }}">
         {% for variant in product.variants %}
           <option value="{{ variant.id }}" {% if variant == current %}selected{% endif %}>{{ variant.title }}</option>
         {% endfor %}
@@ -77,6 +78,7 @@
                 type="button"
                 class="size{% if option.selected_value == value %} is-active{% endif %}"
                 data-value="{{ value | escape }}"
+                aria-pressed="{% if option.selected_value == value %}true{% else %}false{% endif %}"
               >{{ value }}</button>
             {% endfor %}
           </div>
@@ -103,6 +105,7 @@
     <ul class="product__assure">
       <li>Made to order — production 2–5 business days</li>
       <li>Tracked delivery worldwide</li>
+      <li>{{ 'product.ship_no' | t }}</li>
       <li>14-day returns in the EU, EEA, Norway and UK</li>
     </ul>
 
@@ -158,6 +161,7 @@
         <summary>Shipping &amp; returns</summary>
         <div class="acc__body">
           <p>Every piece is made to order by our print partner. Production takes 2–5 business days, then delivery usually takes 2–4 weeks. You get a tracking number by email as soon as it ships.</p>
+          <p>{{ 'cart.ship_rate' | t }}</p>
           <p>EU, EEA (including Norway) and UK: 14-day right of withdrawal, you cover return shipping. Damaged, defective or wrong item: email us within 60 days and we reprint or refund it.</p>
           <p><a href="/pages/shipping-information">Shipping information</a> · <a href="/policies/refund-policy">Returns policy</a></p>
         </div>
@@ -182,7 +186,7 @@
       {%- if gate != blank -%}{%- continue -%}{%- endif -%}
       <a class="look__card" href="{{ p.url }}">
         {%- if p.featured_image -%}
-          {{ p.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '240, 480, 720', sizes: 'auto', alt: p.title }}
+          {{ p.featured_image | image_url: width: 800, format: 'jpg' | image_tag: loading: 'lazy', widths: '240, 480, 720', sizes: '(min-width: 640px) 30vw, 45vw', alt: '' }}
         {%- endif -%}
         <span class="look__name">{{ p.title }}</span>
         <span class="look__price">{{ p.price | money_without_trailing_zeros }}</span>

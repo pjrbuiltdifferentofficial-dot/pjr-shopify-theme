@@ -1,7 +1,7 @@
 <header class="site-header">
   <div class="page-width site-header__inner">
     <div class="site-header__lead">
-      <button type="button" class="menu-toggle" data-open-menu aria-label="{{ 'general.menu' | t }}">
+      <button type="button" class="menu-toggle" data-open-menu aria-label="{{ 'general.menu' | t }}" aria-expanded="false" aria-controls="NavDrawer">
         {% render 'icon-menu' %}
       </button>
       <nav class="site-header__nav" aria-label="{{ 'nav.shop' | t }}">
@@ -19,7 +19,7 @@
 </header>
 
 <div class="drawer-backdrop" data-menu-backdrop></div>
-<aside class="nav-drawer">
+<aside class="nav-drawer" id="NavDrawer" aria-hidden="true" inert aria-label="{{ 'general.menu' | t }}">
   <div style="display:flex;justify-content:space-between;align-items:center;">
     {% render 'wordmark', compact: true %}
     <button type="button" class="site-header__icon" data-close-menu aria-label="{{ 'general.close' | t }}">
